@@ -1,0 +1,14 @@
+Repository Instructions
+
+1) You now own this repository. Do with it what you will.
+
+2) Add your teammates by going to settings>collaborators and adding your teammates.
+
+3) Ownership of this reppository must be transferred back to the following username [anthony-ubah] by 7:00pm on Sunday, November 20th . 
+   If you don't do this, your team won't be eligible for judging.
+
+4) You will be judged on the contents of this repository and ONLY this repository. The only external component you will be judged on is
+   the interactive portion of your code. If the source code for that portion does not match the source code submitted in here, you will
+   be disqualified. 
+
+5) Have fun.
