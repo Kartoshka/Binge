@@ -13,9 +13,41 @@
     <div>
         <h1>Hello World!</h1>
     </div>
+    <div class='likedMovies'>
+    </div>
+    <input type="text" id="movieID"></input>
+    <button onClick="addMovie()">Test</button>
+    <button onClick="clearMovies()">ClearMovies</button>
+    <button onClick="removeMovie()">Remove</button>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="Model.js"></script>
+
+    <script>
+    	retrieveLikedMovies($('.likedMovies'));
+
+    	function addMovie(){
+    		addLikedMovie(parseInt($('#movieID').val()));
+    		$('.likedMovies').empty();
+    		retrieveLikedMovies($('.likedMovies'));
+    	}
+
+    	function clearMovies()
+    	{
+    		clearLikedMovies();
+    		$('.likedMovies').empty();
+    		retrieveLikedMovies($('.likedMovies'));
+    	}
+
+    	function removeMovie()
+    	{
+			removeLikedMovie(parseInt($('#movieID').val()));
+    		$('.likedMovies').empty();
+    		retrieveLikedMovies($('.likedMovies'));
+    	}
+    </script>
 </body>
 
 </html>
