@@ -37,33 +37,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="Model.js"></script>
 
-    <script>
-    	retrieveLikedMovies($('.likedMovies'));
-
-    	function addMovie(){
-    		addLikedMovie(parseInt($('#movieID').val()));
-    		$('.likedMovies').empty();
-    		retrieveLikedMovies($('.likedMovies'));
-    	}
-
-    	function clearMovies()
-    	{
-    		clearLikedMovies();
-    		$('.likedMovies').empty();
-    		retrieveLikedMovies($('.likedMovies'));
-    	}
-
-    	function removeMovie()
-    	{
-			removeLikedMovie(parseInt($('#movieID').val()));
-    		$('.likedMovies').empty();
-    		retrieveLikedMovies($('.likedMovies'));
-    	}
-
     <script src="Movie.js"></script>
     <script src="Model.js"></script>
 
     <script>
+        retrieveLikedMovies($('.likedMovies'));
+
+        function addMovie() {
+            addLikedMovie(parseInt($('#movieID').val()));
+            $('.likedMovies').empty();
+            retrieveLikedMovies($('.likedMovies'));
+        }
+
+        function clearMovies() {
+            clearLikedMovies();
+            $('.likedMovies').empty();
+            retrieveLikedMovies($('.likedMovies'));
+        }
+
+        function removeMovie() {
+            removeLikedMovie(parseInt($('#movieID').val()));
+            $('.likedMovies').empty();
+            retrieveLikedMovies($('.likedMovies'));
+        }
+
         new Movie(2316, $('.movieList'));
         new Movie(2316, $('.movieList'));
     </script>
