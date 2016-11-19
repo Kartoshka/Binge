@@ -1,0 +1,14 @@
+.movie {
+    display: inline-block;
+    text-align: center;
+    margin: 5px 10px;
+}
+
+.movie-thumbnail {
+    height: 80px;
+    max-width: 100px;
+}
+
+.movie-title {
+    text-align: center;
+}

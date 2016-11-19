@@ -6,12 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CodeJam2016</title>
+
+    <link rel='stylesheet' href="movieStyle.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="category">
+        <div>
+            <div class="categoryText">
+                <h2>Recomended</h2>
+                <p>Here are the recommended movies.</p>
+            </div>
+            <button type="button" class="addButton">+</button>
+        </div>
+        <div class="movieList">
 
-    <div>
-        <h1>Hello World!</h1>
+        </div>
     </div>
     <div class='likedMovies'>
     </div>
@@ -19,6 +30,7 @@
     <button onClick="addMovie()">Test</button>
     <button onClick="clearMovies()">ClearMovies</button>
     <button onClick="removeMovie()">Remove</button>
+
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -47,6 +59,13 @@
     		$('.likedMovies').empty();
     		retrieveLikedMovies($('.likedMovies'));
     	}
+
+    <script src="Movie.js"></script>
+    <script src="Model.js"></script>
+
+    <script>
+        new Movie(2316, $('.movieList'));
+        new Movie(2316, $('.movieList'));
     </script>
 </body>
 
