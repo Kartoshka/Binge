@@ -1,22 +1,90 @@
-.category {
-    background-color: black;
-    color: white;
-    height: 33%;
-    margin: 20px 0 20px 0;
-    padding: 20px;
+html {
+    height: 100%;
 }
 
-.categoryText {
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Raleway', 'Oswald', sans-serif;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    padding-top: 35px;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    position: fixed;
+    top: 20px;
+    left: 35px;
+    font-family: 'Oswald';
+    text-decoration: underline;
+}
+
+header h5 {
+    font-weight: 400;
     display: inline-block;
+    margin: 0 10px;
+    cursor: pointer;
+    color: #888;
+    transition: font-size 0.5s ease;
+    font-size: 14px;
+}
+
+header h5.selected {
+    font-weight: bold;
+    color: black;
+}
+
+header h5:hover {
+    color: black;
+    font-size: 16px;
+}
+
+#categories {
+    display: flex;
+    flex-grow: 1;
+}
+
+.category {
+    text-align: center;
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
 }
 
 .addButton {
     background-color: white;
     color: black;
     display: inline-block;
-    height: 100%;
 }
 
-div {
-    height: 100%;
+.movieList {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.movie {
+    margin: 0 5px;
+}
+
+.movie-thumbnail {
+    transition: height 0.5s ease;
+    height: 400px;
+    max-width: 350px;
+    box-shadow: 0 5px 6px #CCC;
+}
+
+.movie-thumbnail:hover {
+    height: 450px;
+    max-width: 394px;
 }
