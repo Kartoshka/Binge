@@ -6,16 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CodeJam2016</title>
+
+    <link rel='stylesheet' href="movieStyle.css">
 </head>
 
 <body>
 
-    <div>
+    <div class='movieList'>
         <h1>Hello World!</h1>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="Movie.js"></script>
+    <script src="Model.js"></script>
+
+    <script>
+        new Movie(2316, $('.movieList'));
+        new Movie(2316, $('.movieList'));
+    </script>
 </body>
 
 </html>
