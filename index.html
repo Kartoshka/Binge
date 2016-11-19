@@ -24,7 +24,6 @@
 
         </div>
     </div>
-    <div class='likedMovies'>
     </div>
     <input type="text" id="movieID"></input>
     <button onClick="addMovie()">Test</button>
@@ -41,28 +40,40 @@
     <script src="Model.js"></script>
 
     <script>
-        retrieveLikedMovies($('.likedMovies'));
+         update();
 
         function addMovie() {
             addLikedMovie(parseInt($('#movieID').val()));
             $('.likedMovies').empty();
-            retrieveLikedMovies($('.likedMovies'));
+            update();
+            //retrieveLikedMovies($('.likedMovies'));
         }
 
         function clearMovies() {
             clearLikedMovies();
             $('.likedMovies').empty();
-            retrieveLikedMovies($('.likedMovies'));
+             update();
+            //retrieveLikedMovies($('.likedMovies'));
         }
 
         function removeMovie() {
             removeLikedMovie(parseInt($('#movieID').val()));
             $('.likedMovies').empty();
-            retrieveLikedMovies($('.likedMovies'));
+             update();
+           // retrieveLikedMovies($('.likedMovies'));
         }
 
-        new Movie(2316, $('.movieList'));
-        new Movie(2316, $('.movieList'));
+        function update()
+        {
+            $('.movieList').empty();
+            var movies =getLikedMovies();
+            for (var i = movies.length - 1; i >= 0; i--) {
+                new Movie(movies[i].id,$('.movieList'));
+            };
+        }
+
+        // new Movie(2316, $('.movieList'));
+        // new Movie(2316, $('.movieList'));
     </script>
 </body>
 
