@@ -10,13 +10,13 @@ function getDistance(movie1, movie2) {
                 commonGenres++;
         }
     }
-    tempDist = 10 / commonGenres;
+    tempDist = 20 / commonGenres;
     distance += tempDist * tempDist;
 
     // other fields
     var fields = ["first_air_date", "popularity", "vote_average"];
     for (var i = 0; i < fields.length; i++) {
-        tempDist = Math.abs(movie1[fields[i]] - movie2[fields[i]]);
+        tempDist = Math.abs(parseFloat(movie1[fields[i]]) - parseFloat(movie2[fields[i]]));
         distance += tempDist * tempDist;
     }
 
