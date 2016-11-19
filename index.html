@@ -18,6 +18,7 @@
         <h5 id="recommendedHeader" class="headerTitle">Recommended</h5>
         <h5 id="likedHeader" class="headerTitle">Liked</h5>
         <h5 id="watchHeader" class="headerTitle">WatchList</h5>
+        <h5 id="searchHeader" class="headerTitle">Search</h5>
     </header>
     <div id="categories">
         <div id="recommended" class="category">
@@ -25,17 +26,26 @@
 
             </div>
         </div>
+
         <div id="liked" class="category">
             <div id="likedList" class="movieList">
 
             </div>
             <button type="button" class="addButton">+</button>
         </div>
+
         <div id="watch" class="category">
             <div id="watchList" class="movieList">
 
             </div>
             <button type="button" class="addButton">+</button>
+        </div>
+
+         <div id="search" class="category">
+            <input type="text" placeholder="Movie Name" id='searchField'></input>
+            <div id="searchList" class="movieList">  
+
+            </div>
         </div>
     </div>
 
@@ -78,6 +88,7 @@
             $(this).addClass('selected');
 
             $('.category').hide();
+            updateLikedList();
             console.log($(this).attr('id'));
 
             switch ($(this).attr('id')) {
@@ -90,30 +101,44 @@
                 case "watchHeader":
                     $('#watch').show();
                     break;
+                case "searchHeader":
+                    $('#search').show();
+                    break;
             }
         });
 
-        retrieveLikedMovies($('.likedMovies'));
-        update();
+        $('#searchField').keyup(function(){
+            if($('#searchField').val()=="")
+            {
+                $('#searchList').empty();
+                return;
+            }
+
+           getMovies($('#searchField').val(),function(data)
+           {
+                var name = $('#searchField').val();
+                $('#searchList').empty();
+                for (var i = 0; i <data.results.length; i++) {
+                    new Movie(data.results[i].id,$('#searchList'),data.results[i]);
+                }      
+           });
+        });
+
 
         function addMovie() {
-            addLikedMovie(parseInt($('#movieID').val()));
-            $('.likedMovies').empty();
-            update();
+            addLikedMovie(parseInt($('#movieID').val()),addNewLikedMovie);
         }
 
         function clearMovies() {
-            clearLikedMovies();
-            $('.likedMovies').empty();
-             update();
+            clearLikedMovies(updateLikedList);
         }
 
         function removeMovie() {
-            removeLikedMovie(parseInt($('#movieID').val()));
-            $('.likedMovies').empty();
-             update();
+            removeLikedMovie(parseInt($('#movieID').val()),updateLikedList);
         }
 
+        updateLikedList();
+
         new Movie(2316, $('#recommendedList'));
         new Movie(2316, $('#recommendedList'));
         new Movie(2316, $('#recommendedList'));
@@ -129,14 +154,20 @@
         new Movie(2316, $('#recommendedList'));
         new Movie(2316, $('#recommendedList'));
 
-        function update()
+        function addNewLikedMovie(id)
         {
-            $('.movieList').empty();
+            new Movie(id,$('#likedList'));
+        }
+
+        function updateLikedList()
+        {
+            $('#likedList').empty();
             var movies = getLikedMovies();
             for (var i = movies.length - 1; i >= 0; i--) {
-                new Movie(movies[i].id,$('.movieList'));
-            };
+                new Movie(movies[i].id,$('#likedList'));
+            }       
         }
+
     </script>
 </body>
 
