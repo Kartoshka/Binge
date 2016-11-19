@@ -7,26 +7,95 @@ function getSuggestions(id,callback){
 }
 
 function addLikedMovie(id){
-	var likedMovies = getLikedMovies();
 
-	if(likedMovies.indexOf(id)==-1){
-		likedMovies.add(id);
+	if(!isNaN(id) && id>=0)
+	{
+		var rating =1;
+		var likedMovies = getLikedMovies();
+
+		if(likedMovies.indexOf(id)==-1){
+			likedMovies.push([id,rating]);
+		}
+		saveLikedMovies(likedMovies);
 	}
-	localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
+}
+
+function removeLikedMovie(id)
+{
+	var rating =1;
+	if(!isNaN(id) && id>=0)
+	{
+		var likedMovies = getLikedMovies();
+		var index = indexOfID(likedMovies,id);
+
+		if(index!=-1)
+		{
+			likedMovies.splice(index,1);
+		}
+		saveLikedMovies(likedMovies);
+	}
+}
+
+function clearLikedMovies()
+{
+	var likedMovies =[];
+	saveLikedMovies(likedMovies);
 }
 
 function movieIsLiked(id){
 	var likedMovies = getLikedMovies();
-	return likedMovies.indexOf(id)!=-1;
+	return indexOfID(likedMovies,id)!=-1;
 }
+
+function saveLikedMovies(likedMovies)
+{
+	localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
+}
+
 
 function getLikedMovies(){
 	if (localStorage.getItem("LikedMovies") === null) {
-		var likedMovies =[];
-		localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
+		clearLikedMovies();
 	}
 
 	return JSON.parse(localStorage.getItem('LikedMovies'))
 }
 
+
+function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('ul');
+
+    for(var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
+
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i]));
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}
+
+function retrieveLikedMovies(container)
+{
+	container.append(makeUL(getLikedMovies()));
+
+}
+
+function indexOfID(array,id)
+{
+	for (var i = array.length - 1; i >= 0; i--) {
+		if(array[i][0]==id)
+		{
+			return i;
+		}
+	};
+
+	return -1;
+}
 
