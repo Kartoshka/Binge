@@ -3,7 +3,7 @@ function getMovieInfo(id, callback){
 }
 
 function getSuggestions(id,callback){
-	$.getJSON( "https://api.themoviedb.org/3/tv/"+id+"/similar?api_key=<<api_key>>&language=en-US", callback);
+	$.getJSON( "https://api.themoviedb.org/3/tv/"+id+"/similar?api_key=6bca0b74270a3299673d934c1bb11b4&language=en-US", callback);
 }
 
 function addLikedMovie(id){
@@ -14,7 +14,7 @@ function addLikedMovie(id){
 		var likedMovies = getLikedMovies();
 
 		if(likedMovies.indexOf(id)==-1){
-			likedMovies.push([id,rating]);
+			likedMovies.push({id:id,rating:rating});
 		}
 		saveLikedMovies(likedMovies);
 	}
@@ -90,7 +90,7 @@ function retrieveLikedMovies(container)
 function indexOfID(array,id)
 {
 	for (var i = array.length - 1; i >= 0; i--) {
-		if(array[i][0]==id)
+		if(array[i].id==id)
 		{
 			return i;
 		}
