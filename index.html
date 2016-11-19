@@ -41,9 +41,9 @@
             <button type="button" class="addButton">+</button>
         </div>
 
-         <div id="search" class="category">
-            <input type="text" placeholder="Movie Name" id='searchField'></input>
-            <div id="searchList" class="movieList">  
+        <div id="search" class="category">
+            <input type="text" placeholder="Movie Name" id='searchField'>
+            <div id="searchList" class="movieList">
 
             </div>
         </div>
@@ -53,7 +53,7 @@
     <div class='likedMovies'>
     </div>
     <div style="flex-direction: row;">
-        <input type="text" id="movieID"></input>
+        <input type="text" id="movieID">
         <button onClick="addMovie()">Test</button>
         <button onClick="clearMovies()">ClearMovies</button>
         <button onClick="removeMovie()">Remove</button>
@@ -66,17 +66,17 @@
     <script src="Model.js"></script>
 
     <script src="Movie.js"></script>
-    <script src="Model.js"></script>
+    <script src="KNN.js"></script>
 
     <script>
         // Mousewheel stuff
-        $(".category").mousewheel(function(event, delta) {
+        $(".category").mousewheel(function (event, delta) {
 
-          this.scrollLeft -= (delta * 30);
+            this.scrollLeft -= (delta * 30);
 
-          event.preventDefault();
+            event.preventDefault();
 
-       });
+        });
 
         // Select first header
         $('.category').hide();
@@ -92,41 +92,39 @@
             console.log($(this).attr('id'));
 
             switch ($(this).attr('id')) {
-                case "recommendedHeader":
-                    $('#recommended').show();
-                    break;
-                case "likedHeader":
-                    $('#liked').show();
-                    break;
-                case "watchHeader":
-                    $('#watch').show();
-                    break;
-                case "searchHeader":
-                    $('#search').show();
-                    break;
+            case "recommendedHeader":
+                $('#recommended').show();
+                break;
+            case "likedHeader":
+                $('#liked').show();
+                break;
+            case "watchHeader":
+                $('#watch').show();
+                break;
+            case "searchHeader":
+                $('#search').show();
+                break;
             }
         });
 
-        $('#searchField').keyup(function(){
-            if($('#searchField').val()=="")
-            {
+        $('#searchField').keyup(function () {
+            if ($('#searchField').val() == "") {
                 $('#searchList').empty();
                 return;
             }
 
-           getMovies($('#searchField').val(),function(data)
-           {
+            getMovies($('#searchField').val(), function (data) {
                 var name = $('#searchField').val();
                 $('#searchList').empty();
-                for (var i = 0; i <data.results.length; i++) {
-                    new Movie(data.results[i].id,$('#searchList'),data.results[i]);
-                }      
-           });
+                for (var i = 0; i < data.results.length; i++) {
+                    new Movie(data.results[i].id, $('#searchList'), data.results[i]);
+                }
+            });
         });
 
 
         function addMovie() {
-            addLikedMovie(parseInt($('#movieID').val()),addNewLikedMovie);
+            addLikedMovie(parseInt($('#movieID').val()), addNewLikedMovie);
         }
 
         function clearMovies() {
@@ -134,40 +132,33 @@
         }
 
         function removeMovie() {
-            removeLikedMovie(parseInt($('#movieID').val()),updateLikedList);
+            removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
         }
 
         updateLikedList();
 
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
-        new Movie(2316, $('#recommendedList'));
+        function addRecommended(pool) {
+            var recommended = getRecommended(pool.results, 10);
+            console.log(recommended);
+            $('#recommendedList').empty();
+            for (var i = 0; i < recommended.length; i++) {
+                new Movie(recommended[i].id, $('#recommendedList'), recommended[i]);
+            }
+        }
+        $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", addRecommended);
 
-        function addNewLikedMovie(id)
-        {
-            new Movie(id,$('#likedList'));
+        function addNewLikedMovie(id) {
+            new Movie(id, $('#likedList'));
+            $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", addRecommended);
         }
 
-        function updateLikedList()
-        {
+        function updateLikedList() {
             $('#likedList').empty();
             var movies = getLikedMovies();
             for (var i = movies.length - 1; i >= 0; i--) {
-                new Movie(movies[i].id,$('#likedList'));
-            }       
+                new Movie(movies[i].id, $('#likedList'));
+            }
         }
-
     </script>
 </body>
 
