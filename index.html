@@ -137,19 +137,27 @@
 
         updateLikedList();
 
-        function addRecommended(pool) {
-            var recommended = getRecommended(pool.results, 10);
-            console.log(recommended);
+        var KNN = new KNN(20, 25);
+
+        function addNewPoolPage(pool) {
+            KNN.updateRecommendations(pool.results);
             $('#recommendedList').empty();
-            for (var i = 0; i < recommended.length; i++) {
-                new Movie(recommended[i].id, $('#recommendedList'), recommended[i]);
+            for (var i = 0; i < KNN.recommendations.length; i++) {
+                new Movie(KNN.recommendations[i].id, $('#recommendedList'), KNN.recommendations[i]);
             }
         }
-        $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", addRecommended);
+
+        function getEntirePool() {
+            for (var i = 1; i <= KNN.numPages; i++) {
+                $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=" + i + "&timezone=America/New_York&include_null_first_air_dates=false", addNewPoolPage);
+            }
+        }
+
+        getEntirePool();
 
         function addNewLikedMovie(id) {
             new Movie(id, $('#likedList'));
-            $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", addRecommended);
+            getEntirePool();
         }
 
         function updateLikedList() {
