@@ -7,40 +7,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CodeJam2016</title>
 
-    <link rel='stylesheet' href="movieStyle.css">
     <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Raleway" rel="stylesheet">
 </head>
 
 <body>
-    <div class="category">
-        <div>
-            <div class="categoryText">
-                <h2>Recomended</h2>
-                <p>Here are the recommended movies.</p>
+    <header>
+        <h1>Smooth</h1>
+        <h5 id="recommendedHeader" class="headerTitle">Recommended</h5>
+        <h5 id="likedHeader" class="headerTitle">Liked</h5>
+        <h5 id="watchHeader" class="headerTitle">WatchList</h5>
+    </header>
+    <div id="categories">
+        <div id="recommended" class="category">
+            <div id="recommendedList" class="movieList">
+
+            </div>
+        </div>
+        <div id="liked" class="category">
+            <div id="likedList" class="movieList">
+
             </div>
             <button type="button" class="addButton">+</button>
         </div>
-        <div class="movieList">
+        <div id="watch" class="category">
+            <div id="watchList" class="movieList">
 
+            </div>
+            <button type="button" class="addButton">+</button>
         </div>
     </div>
+
     <div class='likedMovies'>
     </div>
-    <input type="text" id="movieID"></input>
-    <button onClick="addMovie()">Test</button>
-    <button onClick="clearMovies()">ClearMovies</button>
-    <button onClick="removeMovie()">Remove</button>
-
+    <div style="flex-direction: row;">
+        <input type="text" id="movieID"></input>
+        <button onClick="addMovie()">Test</button>
+        <button onClick="clearMovies()">ClearMovies</button>
+        <button onClick="removeMovie()">Remove</button>
+    </div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="jquery.mousewheel.min.js"></script>
     <script src="Model.js"></script>
 
     <script src="Movie.js"></script>
     <script src="Model.js"></script>
 
     <script>
+        // Mousewheel stuff
+        $(".category").mousewheel(function(event, delta) {
+
+          this.scrollLeft -= (delta * 30);
+
+          event.preventDefault();
+
+       });
+
+        // Select first header
+        $('.category').hide();
+        $('#recommended').show();
+        $('#recommendedHeader').addClass('selected');
+        // Setup event
+        $('.headerTitle').on('click', function (e) {
+            $('.headerTitle').removeClass('selected');
+            $(this).addClass('selected');
+
+            $('.category').hide();
+            console.log($(this).attr('id'));
+
+            switch ($(this).attr('id')) {
+                case "recommendedHeader":
+                    $('#recommended').show();
+                    break;
+                case "likedHeader":
+                    $('#liked').show();
+                    break;
+                case "watchHeader":
+                    $('#watch').show();
+                    break;
+            }
+        });
+
         retrieveLikedMovies($('.likedMovies'));
 
         function addMovie() {
@@ -61,8 +112,20 @@
             retrieveLikedMovies($('.likedMovies'));
         }
 
-        new Movie(2316, $('.movieList'));
-        new Movie(2316, $('.movieList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
+        new Movie(2316, $('#recommendedList'));
     </script>
 </body>
 
