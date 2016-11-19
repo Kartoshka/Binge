@@ -20,9 +20,16 @@ function KNN(numRecommendations, numPages) {
         tempDist = 100 / commonGenres;
         distance += tempDist;
 
-        // other fields
-
+        // first air date
         tempDist = Math.abs(parseFloat(movie1.first_air_date) - parseFloat(movie2.first_air_date));
+        distance += tempDist * tempDist;
+
+        // popularity
+        tempDist = Math.abs(parseFloat(movie1.popularity) - parseFloat(movie2.popularity)) * 0.5;
+        distance += tempDist * tempDist;
+
+        // vote average
+        tempDist = Math.abs(parseFloat(movie1.vote_average) - parseFloat(movie2.vote_average)) * 0.8;
         distance += tempDist * tempDist;
 
         distance = Math.sqrt(distance);

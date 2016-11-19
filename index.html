@@ -77,12 +77,12 @@
     <script src="KNN.js"></script>
 
     <script>
-//        $('#categories').on('mouseover', function(e) {
-//            if (e.pageX > $(this).position().left + $(this).outerWidth() - 100) {
-//                console.log($(this).children('.category').scrollLeft());
-//                $(this).children('.category').scrollLeft($(this).children('.category').scrollLeft() + 20);
-//            }
-//        });
+        //        $('#categories').on('mouseover', function(e) {
+        //            if (e.pageX > $(this).position().left + $(this).outerWidth() - 100) {
+        //                console.log($(this).children('.category').scrollLeft());
+        //                $(this).children('.category').scrollLeft($(this).children('.category').scrollLeft() + 20);
+        //            }
+        //        });
 
         // Mousewheel stuff
         $(".scroll-container").mousewheel(function (event, delta) {
@@ -152,7 +152,7 @@
 
         updateLikedList();
 
-        var KNN = new KNN(20, 25);
+        var KNN = new KNN(20, 20);
 
         function addNewPoolPage(pool) {
             KNN.updateRecommendations(pool.results);
@@ -165,6 +165,8 @@
         function getEntirePool() {
             for (var i = 1; i <= KNN.numPages; i++) {
                 $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=" + i + "&timezone=America/New_York&include_null_first_air_dates=false", addNewPoolPage);
+
+                //$.getJSON("https://api.themoviedb.org/3/tv/456/similar?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&page=" + i, addNewPoolPage);
             }
         }
 
