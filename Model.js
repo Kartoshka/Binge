@@ -45,7 +45,9 @@ function addMovieToList(id, rating, listName, callback) {
                 if (!data.status_code) {
                     movieList.push({
                         id: data.id,
-                        genres: data.genres,
+                        genre_ids: data.genres.map(function (genre) {
+                            return genre.id;
+                        }),
                         first_air_date: data.first_air_date,
                         origin_country: data.origin_country,
                         popularity: data.popularity,
