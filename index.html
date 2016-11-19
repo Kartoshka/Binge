@@ -46,27 +46,24 @@
             addLikedMovie(parseInt($('#movieID').val()));
             $('.likedMovies').empty();
             update();
-            //retrieveLikedMovies($('.likedMovies'));
         }
 
         function clearMovies() {
             clearLikedMovies();
             $('.likedMovies').empty();
              update();
-            //retrieveLikedMovies($('.likedMovies'));
         }
 
         function removeMovie() {
             removeLikedMovie(parseInt($('#movieID').val()));
             $('.likedMovies').empty();
              update();
-           // retrieveLikedMovies($('.likedMovies'));
         }
 
         function update()
         {
             $('.movieList').empty();
-            var movies =getLikedMovies();
+            var movies = getLikedMovies();
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id,$('.movieList'));
             };
