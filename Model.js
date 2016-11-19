@@ -1,3 +1,6 @@
+var likedMoviesListName = 'LikedMovies';
+var dislikedMoviesListName = 'DislikedMovies';
+
 function getMovieInfo(id, callback){
 	$.getJSON( "https://api.themoviedb.org/3/tv/"+id+"?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US", callback);
 }
@@ -16,58 +19,141 @@ function populateRecommended(allMovies,evaluate)
 		if(evaluate(allMovies[i]))
 		{
 			new Movie(allMovies[i].id,$('#recommendedList'));
-			//add to list here
 		}
 	};
 }
 
-function addLikedMovie(id){
-
-	if(!isNaN(id) && id >= 0){ 
-		var rating = 1;
-		var likedMovies = getLikedMovies();
-
-		if(likedMovies.indexOf(id) == -1){
-			likedMovies.push({id:id, rating:rating});
-		}
-		saveLikedMovies(likedMovies);
+function addMovieToList(id, rating)
+{
+	if(rating<=0)
+	{
+		addMovieToList(id,rating,"dislikedMovies");
+	}
+	else 
+	{
+		addMovieToList(id,rating,"likedMovies");
 	}
 }
 
-function removeLikedMovie(id){
+function addMovieToList(id, rating, listName)
+{
+	if(!isNaN(id) && id >= 0){ 
+		var movieList = getMovieList(listName);
+		console.log(movieList.length);
+		if(movieList.indexOf(id) == -1){
+			getMovieInfo(id,function (data) {
+				if(!data.status_code)
+				 {
+					movieList.push({id:data.id, genres:data.genres, first_air_date:data.first_air_date, origin_country:data.origin_country, popularity:data.popularity, vote_average:data.vote_average, app_user_rating:rating});
+					saveMovieList(movieList,listName);
+
+				}
+			});
+		}
+
+	}
+}
+
+function removeMovieFromList(id, listName)
+{
 	var rating =1;
 	if(!isNaN(id) && id >= 0){
-		var likedMovies = getLikedMovies();
-		var index = indexOfID(likedMovies,id);
+		var movieList = getMovieList(listName);
+		var index = indexOfID(movieList,id);
 
 		if(index != -1){
-			likedMovies.splice(index,1);
+			movieList.splice(index,1);
 		}
-		saveLikedMovies(likedMovies);
+		saveMovieList(movieList,listName);
 	}
 }
 
-function clearLikedMovies(){
-	var likedMovies = [];
-	saveLikedMovies(likedMovies);
+function getMovieList(listName)
+{
+	if (localStorage.getItem(listName) === null) {
+		clearMovieList(listName);
+	}
+	return JSON.parse(localStorage.getItem(listName));
 }
 
-function movieIsLiked(id){
-	var likedMovies = getLikedMovies();
-	return indexOfID(likedMovies,id) != -1;
+function saveMovieList(movieList,listName){
+	localStorage.setItem(listName,JSON.stringify(movieList));
+}
+
+function clearMovieList(listName){
+	var movieList = [];
+	saveMovieList(movieList,listName);
+}
+
+function movieInList(id,listName){
+	var movieList = getMovieList(listName);
+	return indexOfID(movieList,id) != -1;
 }
 
 function saveLikedMovies(likedMovies){
 	localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
 }
 
+function addLikedMovie(id){
+	addMovieToList(id,1,likedMoviesListName);
+	// if(!isNaN(id) && id >= 0){ 
+	// 	var rating = 1;
+	// 	var likedMovies = getLikedMovies();
+
+	// 	if(likedMovies.indexOf(id) == -1){
+
+	// 		getMovieInfo(id,function (data) {
+	// 			if(!data.status_code)
+	// 			{
+	// 				likedMovies.push({id:data.id, genres:data.genres, first_air_date:data.first_air_date, origin_country:data.origin_country, popularity:data.popularity, vote_average:data.vote_average});
+	// 			}
+	// 		});
+
+	// 		likedMovies.push({id:id, rating:rating});
+	// 	}
+	// 	saveLikedMovies(likedMovies);
+	// }
+}
+
+function removeLikedMovie(id){
+	removeMovieFromList(id,likedMoviesListName);
+	// var rating =1;
+	// if(!isNaN(id) && id >= 0){
+	// 	var likedMovies = getLikedMovies();
+	// 	var index = indexOfID(likedMovies,id);
+
+	// 	if(index != -1){
+	// 		likedMovies.splice(index,1);
+	// 	}
+	// 	saveLikedMovies(likedMovies);
+	// }
+}
+
+function clearLikedMovies(){
+	clearMovieList(likedMoviesListName);
+	// var likedMovies = [];
+	// saveLikedMovies(likedMovies);
+}
+
+function movieIsLiked(id){
+	return movieInList(likedMoviesListName);
+	// var likedMovies = getLikedMovies();
+	// return indexOfID(likedMovies,id) != -1;
+}
+
+function saveLikedMovies(likedMovies){
+	saveMovieList(likedMoviesListName);
+	// localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
+}
+
 
 function getLikedMovies(){
-	if (localStorage.getItem("LikedMovies") === null) {
-		clearLikedMovies();
-	}
+	return getMovieList(likedMoviesListName);
+	// if (localStorage.getItem("LikedMovies") === null) {
+	// 	clearLikedMovies();
+	// }
 
-	return JSON.parse(localStorage.getItem('LikedMovies'))
+	// return JSON.parse(localStorage.getItem('LikedMovies'))
 }
 
 
