@@ -22,29 +22,37 @@
     </header>
     <div id="categories">
         <div id="recommended" class="category">
-            <div id="recommendedList" class="movieList">
+            <div class="scroll-container">
+                <div id="recommendedList" class="movieList">
 
+                </div>
             </div>
         </div>
 
         <div id="liked" class="category">
-            <div id="likedList" class="movieList">
+            <div class="scroll-container">
+                <div id="likedList" class="movieList">
 
+                </div>
             </div>
-            <button type="button" class="addButton">+</button>
         </div>
 
         <div id="watch" class="category">
-            <div id="watchList" class="movieList">
+            <div class="scroll-container">
+                <div id="watchList" class="movieList">
 
+                </div>
             </div>
-            <button type="button" class="addButton">+</button>
         </div>
 
         <div id="search" class="category">
-            <input type="text" placeholder="Movie Name" id='searchField'>
-            <div id="searchList" class="movieList">
+            <div id="searchField-container">
+                <input type="text" placeholder="TV Show Name" id='searchField'>
+            </div>
+            <div class="scroll-container">
+                <div id="searchList" class="movieList">
 
+                </div>
             </div>
         </div>
     </div>
@@ -69,8 +77,15 @@
     <script src="KNN.js"></script>
 
     <script>
+//        $('#categories').on('mouseover', function(e) {
+//            if (e.pageX > $(this).position().left + $(this).outerWidth() - 100) {
+//                console.log($(this).children('.category').scrollLeft());
+//                $(this).children('.category').scrollLeft($(this).children('.category').scrollLeft() + 20);
+//            }
+//        });
+
         // Mousewheel stuff
-        $(".category").mousewheel(function (event, delta) {
+        $(".scroll-container").mousewheel(function (event, delta) {
 
             this.scrollLeft -= (delta * 30);
 
