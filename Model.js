@@ -96,64 +96,26 @@ function saveLikedMovies(likedMovies){
 
 function addLikedMovie(id){
 	addMovieToList(id,1,likedMoviesListName);
-	// if(!isNaN(id) && id >= 0){ 
-	// 	var rating = 1;
-	// 	var likedMovies = getLikedMovies();
-
-	// 	if(likedMovies.indexOf(id) == -1){
-
-	// 		getMovieInfo(id,function (data) {
-	// 			if(!data.status_code)
-	// 			{
-	// 				likedMovies.push({id:data.id, genres:data.genres, first_air_date:data.first_air_date, origin_country:data.origin_country, popularity:data.popularity, vote_average:data.vote_average});
-	// 			}
-	// 		});
-
-	// 		likedMovies.push({id:id, rating:rating});
-	// 	}
-	// 	saveLikedMovies(likedMovies);
-	// }
 }
 
 function removeLikedMovie(id){
 	removeMovieFromList(id,likedMoviesListName);
-	// var rating =1;
-	// if(!isNaN(id) && id >= 0){
-	// 	var likedMovies = getLikedMovies();
-	// 	var index = indexOfID(likedMovies,id);
-
-	// 	if(index != -1){
-	// 		likedMovies.splice(index,1);
-	// 	}
-	// 	saveLikedMovies(likedMovies);
-	// }
 }
 
 function clearLikedMovies(){
 	clearMovieList(likedMoviesListName);
-	// var likedMovies = [];
-	// saveLikedMovies(likedMovies);
 }
 
 function movieIsLiked(id){
 	return movieInList(likedMoviesListName);
-	// var likedMovies = getLikedMovies();
-	// return indexOfID(likedMovies,id) != -1;
 }
 
 function saveLikedMovies(likedMovies){
 	saveMovieList(likedMoviesListName);
-	// localStorage.setItem('LikedMovies',JSON.stringify(likedMovies));
 }
-
 
 function getLikedMovies(){
 	return getMovieList(likedMoviesListName);
-	// if (localStorage.getItem("LikedMovies") === null) {
-	// 	clearLikedMovies();
-	// }
-
-	// return JSON.parse(localStorage.getItem('LikedMovies'))
 }
 
 
