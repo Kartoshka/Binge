@@ -10,6 +10,17 @@ function getMovies(name, callback){
 	$.getJSON("https://api.themoviedb.org/3/search/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&query="+name,callback);
 }
 
+function populateRecommended(allMovies,evaluate)
+{
+	for (var i = allMovies.length - 1; i >= 0; i--) {
+		if(evaluate(allMovies[i]))
+		{
+			new Movie(allMovies[i].id,$('#recommendedList'));
+			//add to list here
+		}
+	};
+}
+
 function addLikedMovie(id){
 
 	if(!isNaN(id) && id >= 0){ 
