@@ -140,7 +140,7 @@
 
 
         function addMovie() {
-            addLikedMovie(parseInt($('#movieID').val()), addNewLikedMovie);
+            addLikedMovie(parseInt($('#movieID').val()),0.5, addNewLikedMovie);
         }
 
         function addNewLikedMovie(id) {
@@ -163,7 +163,7 @@
             $('#likedList').empty();
             var movies = getLikedMovies();
             for (var i = movies.length - 1; i >= 0; i--) {
-                new Movie(movies[i].id, $('#likedList'));
+                new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
         }
 

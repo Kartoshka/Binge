@@ -1,8 +1,12 @@
-function Movie(id, container,data) {
+function Movie(id, container, data) {
     this.id = id;
     this.container = container;
 
+    var starsContainer;
+
     var self = this;
+    console.log(data);
+    var rating = (data && data.app_user_rating ? data.app_user_rating : -2);
 
     function createNewMovie(data) {
         self.data = data;
@@ -14,14 +18,79 @@ function Movie(id, container,data) {
         {
             self.image = $('<div>').appendTo(self.element).addClass('movie-thumbnail').addClass('no-poster');
             self.title = $('<h4>').appendTo(self.image).text(data.name).addClass('movie-title');
-
         }
 
+        self.popup = $('<div>').appendTo(self.element).addClass('movie-popup').hide();
+        $('<h4>').appendTo(self.popup).text(data.name).addClass('movie-title');
+        $('<p>').appendTo(self.popup).text(data.overview).addClass('movie-overview');
+        starsContainer = $('<div>').appendTo(self.popup).addClass('stars-container');
+
+        var starNb = 0;
+        if (rating > -2) {
+            starNb = rating * 2 + 3;
+        }
+        for (var i = 1; i <= 5; i++) {
+            var starImg = $('<img>').appendTo(starsContainer).attr('title', 'Rate this show').addClass('star').data('value', i);
+
+            if (i <= starNb) {
+                starImg.attr('src', "star-md.png");
+            }
+            else {
+                starImg.attr('src', "star-empty-md.png");
+            }
+        }
+
+        // EVENTS
+
+        $(self.image).on('click', function (e) {
+            if (!self.popup.is(':visible')) {
+                $('.movie-popup').hide(300);
+                self.popup.show(500);
+            }
+            else {
+                $('.movie-popup').hide(300);
+            }
+        });
+
+        $(starsContainer.children('.star')).on('mouseenter', function(e) {
+            var starValue = $(this).data('value');
+            starsContainer.children('.star').each(function(i, star) {
+                if ($(star).data('value') <= starValue) {
+                    $(star).attr('src', "star-md.png");
+                }
+                else {
+                    $(star).attr('src', "star-empty-md.png");
+                }
+            });
+        });
+        $(starsContainer.children('.star')).on('mouseleave', function(e) {
+            var starNb = 0;
+            if (self.data.app_user_rating > -2) {
+                starNb = self.data.app_user_rating * 2 + 3;
+            }
+            starsContainer.children('.star').each(function(i, star) {
+                if (i <= starNb) {
+                    $(star).attr('src', "star-md.png");
+                }
+                else {
+                   $(star).attr('src', "star-empty-md.png");
+                }
+            });
+        });
+        $(starsContainer.children('.star')).on('click', function(e) {
+            var rating = ($(this).data('value') - 3) / 2.0; // Rating is between -1 and 1
+            addLikedMovie(data.id, rating);
+        })
+
+        $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
+
         self.container.append(self.element);
+
     }
 
     if(data)
     {
+        self.data = data;
         createNewMovie(data);
     }
     else

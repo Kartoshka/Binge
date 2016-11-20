@@ -27,14 +27,6 @@ function populateRecommended(allMovies, evaluate) {
     };
 }
 
-function addMovieToList(id, rating) {
-    if (rating <= 0) {
-        addMovieToList(id, rating, "dislikedMovies");
-    } else {
-        addMovieToList(id, rating, "likedMovies");
-    }
-}
-
 function addMovieToList(id, rating, listName, callback) {
     if (!isNaN(id) && id >= 0) {
         var movieList = getMovieList(listName);
@@ -45,6 +37,9 @@ function addMovieToList(id, rating, listName, callback) {
                 if (!data.status_code) {
                     movieList.push({
                         id: data.id,
+                        name: data.name,
+                        overview: data.overview,
+                        poster_path: data.poster_path,
                         genre_ids: data.genres.map(function (genre) {
                             return genre.id;
                         }),

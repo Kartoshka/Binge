@@ -80,6 +80,8 @@ header h5:hover {
 }
 
 .movie {
+    display: flex;
+    flex-direction: row;
     margin: 0 5px;
 }
 
@@ -117,4 +119,40 @@ header h5:hover {
     justify-content: center;
     align-items: center;
     border: solid 1px #AAA;
+}
+
+.movie-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+}
+
+.stars-container {
+    display: flex;
+    justify-content: center;
+}
+
+.add-to-watchlist {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    background-color: white;
+    border: solid 2px #888;
+    color: #444;
+    margin-left: 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-to-watchlist:hover {
+    background-color: #F9F9F9;
+    box-shadow: 1px 1px 5px #CCC;
+}
+.add-to-watchlist:active {
+    box-shadow: none;
+}
+.add-to-watchlist:focus {
+    /* Remove blue border when clicked in Chrome */
+    outline: 0;
 }
