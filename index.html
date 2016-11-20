@@ -173,6 +173,18 @@
             clearLikedMovies(updateLikedList);
         }
 
+        function removeMovie(id)
+        {
+            if(movieIsLiked(id)!=-1)
+            {
+                removeLikedMovie(id,updateLikedList);
+            }
+            else if(movieisToWatch(id)!=-1)
+            {
+                removeToWatchMovie(id,updateLikedList);
+            }
+        }
+
         function removeMovie() {
             removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
         }
@@ -183,13 +195,14 @@
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
+
+            updateSearch();
+            updateToWatchList();
+
             if(obj_KNN)
             {
                updateAndShowRecommendations(true);
             }
-
-            updateSearch();
-            updateToWatchList();
 
         }
 
