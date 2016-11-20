@@ -105,9 +105,12 @@ function KNN(numRecommendations, numPages, fraction) {
 
             for (var i = 0; i < this.pool.length; i++) {
 
-                var rating = getKNNRating(this.pool[i], likedMovies, Math.ceil(this.fraction * likedMovies.length));
-                if (movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1)
+                var rating;
+                if (movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1) {
                     rating = -Infinity;
+                } else {
+                    rating = getKNNRating(this.pool[i], likedMovies, Math.ceil(this.fraction * likedMovies.length));
+                }
                 var j = 0;
                 while (j < Math.min(this.ratings.length, this.n) && this.ratings[j] > rating) {
                     j++;
