@@ -46,6 +46,21 @@ header h5 {
     transition: box-shadow 0.4s ease;
     box-shadow: none;
     cursor: pointer;
+
+}
+
+#help-text
+{
+    width: 200px;
+    font-size: 10px;
+    position: fixed;
+    right: 52px;
+    top: 31px;
+    background-color: #ffffff;
+    height: 75px;
+    padding-top: 5px;
+    line-height: 1.5;
+    display:none;
 }
 
 .header-icon:hover {
