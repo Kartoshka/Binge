@@ -15,7 +15,12 @@ function clearLikedMovies(callback) {
 }
 
 function movieIsLiked(id) {
-    return movieInList(likedMoviesListName);
+    return movieInList(id,likedMoviesListName);
+}
+
+function getLikedMovie(id)
+{
+	return getMovieInList(id,likedMoviesListName);
 }
 
 function saveLikedMovies(likedMovies) {

@@ -124,7 +124,10 @@
             }
         });
 
-        $('#searchField').keyup(function () {
+        $('#searchField').keyup(updateSearch);
+
+        function updateSearch()
+        {
             if ($('#searchField').val() == "") {
                 $('#searchList').empty();
                 return;
@@ -134,10 +137,19 @@
                 var name = $('#searchField').val();
                 $('#searchList').empty();
                 for (var i = 0; i < data.results.length; i++) {
-                    new Movie(data.results[i].id, $('#searchList'), data.results[i]);
+                    if(!movieIsLiked(data.results[i].id)){
+                        new Movie(data.results[i].id, $('#searchList'), data.results[i]);
+                    }
+                    else
+                    {
+                        var cachedMovie = getLikedMovie(data.results[i].id);
+                        if(cachedMovie){
+                            new Movie(cachedMovie.id, $('#searchList'), cachedMovie);
+                        }
+                    }
                 }
             });
-        });
+        }
 
         function rateMovie(id,rating) {
             addLikedMovie(id,rating, updateLikedList);
@@ -145,13 +157,10 @@
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
-            //updateAndShowRecommendations(true);
         }
 
         function removeMovie() {
             removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
-            //updateAndShowRecommendations(true);
-
         }
 
         function updateLikedList() {
@@ -164,6 +173,7 @@
             {
                updateAndShowRecommendations(true);
             }
+            updateSearch();
 
         }
 

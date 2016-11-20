@@ -11,7 +11,6 @@ function getSuggestions(id, callback) {
 }
 
 var results;
-
 function getMovies(name, callback) {
     if (results) {
         results.abort();
@@ -28,7 +27,6 @@ function populateRecommended(allMovies, evaluate) {
 }
 
 function addMovieToList(id, rating, listName, callback) {
-	console.log("add");
     if (!isNaN(id) && id >= 0) {
         var movieList = getMovieList(listName);
         var index = indexOfID(movieList, id);
@@ -104,8 +102,19 @@ function clearMovieList(listName, callback) {
 }
 
 function movieInList(id, listName) {
-    var movieList = getMovieList(listName);
-    return indexOfID(movieList, id) != -1;
+    var movieList = getMovieList(id);
+    return indexOfID(movieList, id);
+}
+
+function getMovieInList(id, listName)
+{
+	var movies = getMovieList(listName);
+	for (var i = movies.length - 1; i >= 0; i--) {
+		if(movies[i].id==id)
+		{
+			return movies[i];
+		}
+	};
 }
 
 function makeUL(array) {
