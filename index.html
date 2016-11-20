@@ -151,6 +151,20 @@
             });
         }
 
+        function updateToWatchList()
+        {
+            $('#watchList').empty();
+            var watchMovies = getToWatchMovies();
+            for (var i = 0; i <watchMovies.length; i++) {
+                new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
+            };
+        }
+
+        function addToWatch(id)
+        {
+            addToWatchMovie(id, updateLikedList);
+        }
+
         function rateMovie(id,rating) {
             addLikedMovie(id,rating, updateLikedList);
         }
@@ -173,7 +187,9 @@
             {
                updateAndShowRecommendations(true);
             }
+
             updateSearch();
+            updateToWatchList();
 
         }
 
