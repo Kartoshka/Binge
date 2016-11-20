@@ -29,12 +29,17 @@ header h5 {
     font-size: 14px;
 }
 
-.logo
-{
+.logo {
     position: fixed;
     top: 20px;
     left: 35px;
     width: 160px;
+}
+
+@media (max-width: 730px) {
+    .logo {
+        display: none;
+    }
 }
 
 .header-icon {
@@ -46,7 +51,12 @@ header h5 {
     transition: box-shadow 0.4s ease;
     box-shadow: none;
     cursor: pointer;
+}
 
+@media (max-width: 430px) {
+    .header-icon {
+        display: none;
+    }
 }
 
 #help-text
