@@ -102,7 +102,7 @@ function clearMovieList(listName, callback) {
 }
 
 function movieInList(id, listName) {
-    var movieList = getMovieList(id);
+    var movieList = getMovieList(listName);
     return indexOfID(movieList, id);
 }
 
