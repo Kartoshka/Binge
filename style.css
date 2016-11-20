@@ -109,6 +109,15 @@ header h5:hover {
     margin: 0 auto;
 }
 
+#searchList {
+    justify-content: flex-start;
+    text-align: center;
+}
+
+#searchList .to-do-hint {
+    width: 100%;
+}
+
 .movie {
     display: flex;
     flex-direction: row;
