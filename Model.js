@@ -11,6 +11,7 @@ function getSuggestions(id, callback) {
 }
 
 var results;
+
 function getMovies(name, callback) {
     if (results) {
         results.abort();
@@ -44,24 +45,23 @@ function addMovieToList(id, rating, listName, callback) {
                         }),
                         first_air_date: data.first_air_date,
                         origin_country: data.origin_country,
+                        original_language: data.original_language,
                         popularity: data.popularity,
                         vote_average: data.vote_average,
                         app_user_rating: rating
                     });
                     saveMovieList(movieList, listName);
-                    if (callback){
+                    if (callback) {
                         callback(id);
                     }
                 }
             });
-        }
-        else
-        {	
-        	movieList[index].app_user_rating = rating;
+        } else {
+            movieList[index].app_user_rating = rating;
         }
         saveMovieList(movieList, listName);
-        if (callback){
-                callback(id);
+        if (callback) {
+            callback(id);
         }
 
 
@@ -106,15 +106,13 @@ function movieInList(id, listName) {
     return indexOfID(movieList, id);
 }
 
-function getMovieInList(id, listName)
-{
-	var movies = getMovieList(listName);
-	for (var i = movies.length - 1; i >= 0; i--) {
-		if(movies[i].id==id)
-		{
-			return movies[i];
-		}
-	};
+function getMovieInList(id, listName) {
+    var movies = getMovieList(listName);
+    for (var i = movies.length - 1; i >= 0; i--) {
+        if (movies[i].id == id) {
+            return movies[i];
+        }
+    };
 }
 
 function makeUL(array) {
