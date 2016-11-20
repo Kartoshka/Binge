@@ -26,6 +26,17 @@ function getLikedMovies() {
     return getMovieList(likedMoviesListName);
 }
 
+function getLikedMoviesByScore(){
+	var likedMovies = getMovieList(likedMoviesListName);
+	likedMovies.sort(compareRatings);
+	return likedMovies;
+}
+
+function compareRatings(a,b)
+{
+	return a.app_user_rating - b.app_user_rating;
+}
+
 function retrieveLikedMovies(container) {
     container.append(makeUL(getLikedMovies()));
 
