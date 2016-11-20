@@ -107,9 +107,8 @@ function saveLikedMovies(likedMovies, callback) {
     saveMovieList(likedMovies, likedMoviesListName, callback);
 }
 
-function addLikedMovie(id, callback) {
-    console.log(1);
-    addMovieToList(id, 1, likedMoviesListName, callback);
+function addLikedMovie(id, rating,callback) {
+    addMovieToList(id, rating, likedMoviesListName, callback);
 }
 
 function removeLikedMovie(id, callback) {
