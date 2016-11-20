@@ -1,5 +1,5 @@
 var likedMoviesListName = 'LikedMovies';
-var dislikedMoviesListName = 'DislikedMovies';
+var toWatchMoviesListName = 'ToWatchMovies';
 var emptyFunc = function () {};
 
 function getMovieInfo(id, callback) {
@@ -132,7 +132,10 @@ function getLikedMovies() {
     return getMovieList(likedMoviesListName);
 }
 
+function retrieveLikedMovies(container) {
+    container.append(makeUL(getLikedMovies()));
 
+}
 function makeUL(array) {
     // Create the list element:
     var list = document.createElement('ul');
@@ -150,11 +153,6 @@ function makeUL(array) {
 
     // Finally, return the constructed list:
     return list;
-}
-
-function retrieveLikedMovies(container) {
-    container.append(makeUL(getLikedMovies()));
-
 }
 
 function indexOfID(array, id) {
