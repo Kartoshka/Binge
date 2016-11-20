@@ -19,7 +19,13 @@
         <h5 id="likedHeader" class="headerTitle">Rated</h5>
         <h5 id="watchHeader" class="headerTitle">WatchList</h5>
         <h5 id="searchHeader" class="headerTitle">Search</h5>
-        <img src="question-sign-sm.png" title="Help" class="header-icon">
+
+        <div >
+            <div id="help-text">Search for shows and rate them to get better recommendations
+                or add them to your watch later list to rate them afterwards!</div>
+            <img id="help-icon" class="header-icon" src="question-sign-sm.png" title="Help" >
+        </div>
+
     </header>
     <div id="categories">
         <div id="recommended" class="category">
@@ -59,9 +65,8 @@
     </div>
 
 
-    <div class='likedMovies'>
-    </div>
-    <div style="flex-direction: row;">
+
+    <div style="flex-direction: row; display:none" id='dev-tools'>
         <input type="text" id="movieID">
         <input type="text" id="rating">
         <button onClick="addMovie()">Test</button>
@@ -122,17 +127,40 @@
             }
         });
 
+
+        //Help text on hover show
+        $( "#help-icon" ).mouseover(function() {
+            $( "#help-text" ).show(200);
+        });
+        $( "#help-icon" ).mouseout(function() {
+            $( "#help-text" ).hide(200);
+        });
+
+
+        //Search box on type search
         $('#searchField').keyup(updateSearch);
 
-        function updateSearch() {
-            if ($('#searchField').val() == "") {
-                $('#searchList').empty();
-                return;
-            }
 
-            getMovies($('#searchField').val(), function (data) {
-                var name = $('#searchField').val();
+        function updateSearch()
+        {
+            $('#searchList').empty();
+
+            var search =$('#searchField').val().trim();
+            if (search == "") {
                 $('#searchList').empty();
+                $('<div>').appendTo('#searchList').addClass('to-do-hint').text('Search for your favorite movies to rate them or add them to your watch list!');
+            }
+            else if(search.toUpperCase() == "PORN" || search.toUpperCase() == "SEX" || search == "69")
+            {
+                $('<div>').appendTo('#searchList').addClass('to-do-hint').text('ಠ_ಠ');
+
+            }
+            else if (search == "dev-tools") {
+                $("#dev-tools").show();
+            }
+            else
+            {
+                getMovies(search, function (data) {
                 for (var i = 0; i < data.results.length; i++) {
                     if (movieIsLiked(data.results[i].id) == -1) {
                         new Movie(data.results[i].id, $('#searchList'), data.results[i]);
@@ -144,15 +172,26 @@
                     }
                 }
             });
+            }
+
         }
 
         function updateToWatchList()
         {
             $('#watchList').empty();
             var watchMovies = getToWatchMovies();
-            for (var i = 0; i <watchMovies.length; i++) {
-                new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
-            };
+
+            if(watchMovies.length==0)
+            {
+                $('<div>').appendTo('#watchList').addClass('to-do-hint').text('Add movies to watch later and to filter your recommendations list!');
+            }
+            else
+            {
+                for (var i = 0; i <watchMovies.length; i++) {
+                    new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
+                };
+            }
+
         }
 
         function addToWatch(id)
@@ -180,15 +219,18 @@
             }
         }
 
-//        function removeMovie() {
-//            removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
-//        }
-
         function updateLikedList() {
             $('#likedList').empty();
             var movies = getLikedMoviesByScore();
-            for (var i = movies.length - 1; i >= 0; i--) {
+            if(movies.length==0)
+            {
+                $('<div>').appendTo('#likedList').addClass('to-do-hint').text('Rate some movies to start getting tailored recommendations!');
+            }
+            else
+            {
+               for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
+                }
             }
             updateSearch();
             updateToWatchList();
