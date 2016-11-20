@@ -51,8 +51,9 @@ function addMovieToList(id, rating, listName, callback) {
                         app_user_rating: rating
                     });
                     saveMovieList(movieList, listName);
-                    if (callback)
+                    if (callback){
                         callback(id);
+                    }
                 }
             });
         }
@@ -61,6 +62,9 @@ function addMovieToList(id, rating, listName, callback) {
         	movieList[index].app_user_rating = rating;
         }
         saveMovieList(movieList, listName);
+        if (callback){
+                callback(id);
+        }
 
 
     }
