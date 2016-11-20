@@ -37,6 +37,21 @@ header h5 {
     font-size: 14px;
 }
 
+.header-icon {
+    position: fixed;
+    top: 35px;
+    right: 35px;
+    width: 17px;
+    border-radius: 50%;
+    transition: box-shadow 0.4s ease;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.header-icon:hover {
+    box-shadow: 1px 1px 5px #AAA;
+}
+
 header h5.selected {
     font-weight: bold;
     color: black;
@@ -98,11 +113,6 @@ header h5:hover {
     max-width: 394px;
 }
 
-.movie-overview {
-    text-align: justify;
-    padding: 0 10px;
-}
-
 #search {
     display: flex;
     flex-direction: column;
@@ -135,6 +145,11 @@ header h5:hover {
     flex-direction: column;
     justify-content: center;
     width: 400px;
+}
+
+.movie-overview {
+    text-align: justify;
+    padding: 0 17px;
 }
 
 .stars-container {
