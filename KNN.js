@@ -5,9 +5,31 @@ function KNN(numRecommendations, numPages) {
     this.recommendations = [];
     this.ratings = [];
 
+    this.pool = [];
+
+    var self = this;
+
+    function appendToPool(newPool) {
+        var oldPool = self.pool;
+        self.pool = newPool.results;
+        updateAndShowRecommendations(false);
+        self.pool = oldPool.concat(newPool.results);
+    }
+
+    for (var i = 1; i <= this.numPages; i++) {
+        $.getJSON("https://api.themoviedb.org/3/discover/tv?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US&sort_by=popularity.desc&page=" + i + "&timezone=America/New_York&include_null_first_air_dates=false", appendToPool);
+    }
+
+
+
     function getDistance(movie1, movie2) {
         var distance = 0,
             tempDist = 0;
+
+        // duplicate protection
+        if (movie1.id === movie2.id) {
+            return Infinity;
+        }
 
         // genres
         var commonGenres = 1;
@@ -22,7 +44,8 @@ function KNN(numRecommendations, numPages) {
 
         // first air date
         tempDist = Math.abs(parseFloat(movie1.first_air_date) - parseFloat(movie2.first_air_date));
-        distance += tempDist * tempDist;
+        if (!(parseFloat(movie1.first_air_date) == 0 || parseFloat(movie2.first_air_date) == 0))
+            distance += tempDist;
 
         // popularity
         tempDist = Math.abs(parseFloat(movie1.popularity) - parseFloat(movie2.popularity)) * 0.5;
@@ -32,7 +55,6 @@ function KNN(numRecommendations, numPages) {
         tempDist = Math.abs(parseFloat(movie1.vote_average) - parseFloat(movie2.vote_average)) * 0.8;
         distance += tempDist * tempDist;
 
-        distance = Math.sqrt(distance);
         return distance;
     }
 
@@ -40,30 +62,32 @@ function KNN(numRecommendations, numPages) {
 
         var closeness = 0;
         for (var i = 0; i < likedMovies.length; i++) {
-            closeness += 1 / getDistance(likedMovies[i], movie);
+            closeness += getDistance(likedMovies[i], movie);
         }
-        return closeness;
+        return 1 / Math.sqrt(closeness);
     }
 
-    // returns the n best recommendations from moviePool, in order of relevance
-    this.updateRecommendations = function (moviePool) {
+    // returns the n best recommendations from the pool, in order of relevance
+    this.updateRecommendations = function () {
 
         var likedMovies = getLikedMovies();
         if (!likedMovies) {
-            return moviePool.slice(0, this.n);
-        }
+            this.recommendations = this.pool.slice(0, this.n);
 
-        for (var i = 0; i < moviePool.length; i++) {
-            var rating = getCloseness(moviePool[i], likedMovies);
-            var j = 0;
-            while (j < Math.min(this.ratings.length, this.n) && this.ratings[j] > rating) {
-                j++;
+        } else {
+
+            for (var i = 0; i < this.pool.length; i++) {
+                var rating = getCloseness(this.pool[i], likedMovies);
+                var j = 0;
+                while (j < Math.min(this.ratings.length, this.n) && this.ratings[j] > rating) {
+                    j++;
+                }
+                this.recommendations.splice(j, 0, this.pool[i]);
+                this.ratings.splice(j, 0, rating);
             }
-            this.recommendations.splice(j, 0, moviePool[i]);
-            this.ratings.splice(j, 0, rating);
-        }
 
-        this.recommendations = this.recommendations.slice(0, this.n);
-        this.ratings = this.ratings.slice(0, this.n);
+            this.recommendations = this.recommendations.slice(0, this.n);
+            this.ratings = this.ratings.slice(0, this.n);
+        }
     }
 }
