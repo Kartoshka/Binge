@@ -10,10 +10,15 @@ function KNN(numRecommendations, numPages) {
     var self = this;
 
     function appendToPool(newPool) {
-        var oldPool = self.pool;
-        self.pool = newPool.results;
-        updateAndShowRecommendations(false);
-        self.pool = oldPool.concat(newPool.results);
+        if (getLikedMovies.length > 0) {
+            var oldPool = self.pool;
+            self.pool = newPool.results;
+            updateAndShowRecommendations(false);
+            self.pool = oldPool.concat(newPool.results);
+        } else {
+            self.pool = self.pool.concat(newPool.results);
+            updateAndShowRecommendations(true);
+        }
     }
 
     for (var i = 1; i <= this.numPages; i++) {
@@ -44,8 +49,9 @@ function KNN(numRecommendations, numPages) {
 
         // first air date
         tempDist = Math.abs(parseFloat(movie1.first_air_date) - parseFloat(movie2.first_air_date));
-        if (!(parseFloat(movie1.first_air_date) == 0 || parseFloat(movie2.first_air_date) == 0))
-            distance += tempDist;
+        if (isNaN(parseFloat(movie1.first_air_date)) || isNaN(parseFloat(movie2.first_air_date)))
+            tempDist = 10;
+        distance += tempDist;
 
         // popularity
         tempDist = Math.abs(parseFloat(movie1.popularity) - parseFloat(movie2.popularity)) * 0.5;
@@ -71,7 +77,7 @@ function KNN(numRecommendations, numPages) {
     this.updateRecommendations = function () {
 
         var likedMovies = getLikedMovies();
-        if (!likedMovies) {
+        if (likedMovies.length == 0) {
             this.recommendations = this.pool.slice(0, this.n);
 
         } else {
