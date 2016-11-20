@@ -45,6 +45,7 @@ function addMovieToList(id, rating, listName, callback) {
                         }),
                         first_air_date: data.first_air_date,
                         origin_country: data.origin_country,
+                        original_language: data.original_language,
                         popularity: data.popularity,
                         vote_average: data.vote_average,
                         app_user_rating: rating
