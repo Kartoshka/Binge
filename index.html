@@ -137,7 +137,7 @@
                 var name = $('#searchField').val();
                 $('#searchList').empty();
                 for (var i = 0; i < data.results.length; i++) {
-                    if(!movieIsLiked(data.results[i].id)){
+                    if(movieIsLiked(data.results[i].id)==-1){
                         new Movie(data.results[i].id, $('#searchList'), data.results[i]);
                     }
                     else
