@@ -101,9 +101,12 @@
             event.preventDefault();
         });
 
-        // Select first header
         $('.category').hide();
+        updateLikedList();
+        var obj_KNN = new KNN(20, 20, 0.6);
+        // Select first header
         $('#recommended').fadeIn(1000);
+
         $('#recommendedHeader').addClass('selected');
         // Setup event
         $('.headerTitle').on('click', function (e) {
@@ -226,9 +229,8 @@
 
         }
 
-        updateLikedList();
 
-        var obj_KNN = new KNN(20, 20, 0.6);
+
 
         function updateAndShowRecommendations(reset) {
             if (reset) {
