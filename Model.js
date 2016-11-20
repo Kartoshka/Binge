@@ -28,6 +28,7 @@ function populateRecommended(allMovies, evaluate) {
 }
 
 function addMovieToList(id, rating, listName, callback) {
+	console.log("add");
     if (!isNaN(id) && id >= 0) {
         var movieList = getMovieList(listName);
         var index = indexOfID(movieList, id);
@@ -50,12 +51,17 @@ function addMovieToList(id, rating, listName, callback) {
                         app_user_rating: rating
                     });
                     saveMovieList(movieList, listName);
-                    console.log("Saved list");
                     if (callback)
                         callback(id);
                 }
             });
         }
+        else
+        {	
+        	movieList[index].app_user_rating = rating;
+        }
+        saveMovieList(movieList, listName);
+
 
     }
 }
@@ -81,7 +87,6 @@ function getMovieList(listName) {
 }
 
 function saveMovieList(movieList, listName, callback) {
-    console.log(3);
 
     callback = callback || emptyFunc;
 

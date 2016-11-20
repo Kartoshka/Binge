@@ -139,25 +139,18 @@
             });
         });
 
-
-
-        function addMovie() {
-            addLikedMovie(parseInt($('#movieID').val()),parseFloat($('#rating').val()), updateLikedList);
+        function rateMovie(id,rating) {
+            addLikedMovie(id,rating, updateLikedList);
         }
-
-        // function addNewLikedMovie(id) {
-        //     new Movie(id, $('#likedList'));
-        //     updateAndShowRecommendations(true);
-        // }
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
-            updateAndShowRecommendations(true);
+            //updateAndShowRecommendations(true);
         }
 
         function removeMovie() {
             removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
-            updateAndShowRecommendations(true);
+            //updateAndShowRecommendations(true);
 
         }
 
@@ -167,25 +160,29 @@
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
+            if(obj_KNN)
+            {
+               updateAndShowRecommendations(true);
+            }
 
         }
 
         updateLikedList();
 
-        var KNN = new KNN(20, 20);
+        var obj_KNN = new KNN(20, 20);
 
         function updateAndShowRecommendations(reset) {
             if (reset) {
-                KNN.recommendations = [];
-                KNN.ratings = [];
+                obj_KNN.recommendations = [];
+                obj_KNN.ratings = [];
             }
 
-            KNN.updateRecommendations();
+            obj_KNN.updateRecommendations();
 
             $('#recommendedList').empty();
 
-            for (var i = 0; i < KNN.recommendations.length; i++) {
-                new Movie(KNN.recommendations[i].id, $('#recommendedList'), KNN.recommendations[i]);
+            for (var i = 0; i < obj_KNN.recommendations.length; i++) {
+                new Movie(obj_KNN.recommendations[i].id, $('#recommendedList'), obj_KNN.recommendations[i]);
             }
         }
     </script>

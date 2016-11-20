@@ -79,7 +79,8 @@ function Movie(id, container, data) {
         });
         $(starsContainer.children('.star')).on('click', function(e) {
             var rating = ($(this).data('value') - 3) / 2.0; // Rating is between -1 and 1
-            addLikedMovie(data.id, rating);
+            // addLikedMovie(data.id, rating);
+            rateMovie(data.id,rating);
         })
 
         $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
