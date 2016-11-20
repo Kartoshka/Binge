@@ -99,7 +99,14 @@ function KNN(numRecommendations, numPages, fraction) {
 
         var likedMovies = getLikedMovies();
         if (likedMovies.length == 0) {
-            this.recommendations = this.pool.slice(0, this.n);
+            this.recommendations = [];
+            var i = 0;
+            while (this.pool[i] && this.recommendations.length < this.n) {
+                if (!(movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1))
+                    this.recommendations.push(this.pool[i]);
+                i++;
+
+            }
 
         } else {
 
