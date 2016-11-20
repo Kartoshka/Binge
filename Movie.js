@@ -52,7 +52,19 @@ function Movie(id, container, data) {
         $(self.image).on('click', function(e) {
             if (!self.popup.is(':visible')) {
                 $('.movie-popup').hide(300);
-                self.popup.show(500);
+                self.popup.show(500, function() {
+                    // Center the movie with its popup:
+                    var scrollLeft = self.container.parent().scrollLeft();
+
+                    if (self.element.offset().left + self.element.outerWidth() > $(window).width()) {
+                        scrollLeft += self.element.offset().left + self.element.outerWidth() - $(window).width();
+                        self.container.parent().animate({ scrollLeft: scrollLeft });
+                    }
+                    else if (self.element.offset().left < 0) {
+                        scrollLeft += self.element.offset().left;
+                        self.container.parent().animate({ scrollLeft: scrollLeft });
+                    }
+                });
             } else {
                 $('.movie-popup').hide(300);
             }
