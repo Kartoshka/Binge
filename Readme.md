@@ -5,6 +5,8 @@ It's a bird, it's a plane, it's Binge!
 
 Binge is a TV show suggestion engine. It allows you to rate shows, get suggestions and save them for later.
 
+![](Capture.PNG?raw=true)
+
 ## Why Binge?
 Easy to use: Rate a few movies and get suggestions instantly.
 
