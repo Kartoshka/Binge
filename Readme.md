@@ -5,7 +5,9 @@ It's a bird, it's a plane, it's Binge!
 
 Binge is a TV show suggestion engine. It allows you to rate shows, get suggestions and save them for later.
 
-![](Capture.PNG?raw=true)
+Created by team Marmalade: Jérôme Parent-Lévesque ([@jeromepl](https://github.com/jeromepl)), Mathieu Bolduc ([@mathieubolduc](https://github.com/mathieubolduc)) and Elie Harfouche ([@Kartoshka](https://github.com/Kartoshka)).
+
+![Screenshot](Capture.PNG?raw=true)
 
 ## Why Binge?
 Easy to use: Rate a few movies and get suggestions instantly.
