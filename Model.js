@@ -1,6 +1,6 @@
 var likedMoviesListName = 'LikedMovies';
 var toWatchMoviesListName = 'ToWatchMovies';
-var emptyFunc = function () {};
+var emptyFunc = function() {};
 
 function getMovieInfo(id, callback) {
     $.getJSON("https://api.themoviedb.org/3/tv/" + id + "?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US", callback);
@@ -11,6 +11,7 @@ function getSuggestions(id, callback) {
 }
 
 var results;
+
 function getMovies(name, callback) {
     if (results) {
         results.abort();
@@ -32,14 +33,14 @@ function addMovieToList(id, rating, listName, callback) {
         var index = indexOfID(movieList, id);
 
         if (index == -1) {
-            getMovieInfo(id, function (data) {
+            getMovieInfo(id, function(data) {
                 if (!data.status_code) {
                     movieList.push({
                         id: data.id,
                         name: data.name,
                         overview: data.overview,
                         poster_path: data.poster_path,
-                        genre_ids: data.genres.map(function (genre) {
+                        genre_ids: data.genres.map(function(genre) {
                             return genre.id;
                         }),
                         first_air_date: data.first_air_date,
@@ -49,19 +50,17 @@ function addMovieToList(id, rating, listName, callback) {
                         app_user_rating: rating
                     });
                     saveMovieList(movieList, listName);
-                    if (callback){
+                    if (callback) {
                         callback(id);
                     }
                 }
             });
-        }
-        else
-        {	
-        	movieList[index].app_user_rating = rating;
+        } else {
+            movieList[index].app_user_rating = rating;
         }
         saveMovieList(movieList, listName);
-        if (callback){
-                callback(id);
+        if (callback) {
+            callback(id);
         }
 
 
@@ -106,15 +105,13 @@ function movieInList(id, listName) {
     return indexOfID(movieList, id);
 }
 
-function getMovieInList(id, listName)
-{
-	var movies = getMovieList(listName);
-	for (var i = movies.length - 1; i >= 0; i--) {
-		if(movies[i].id==id)
-		{
-			return movies[i];
-		}
-	};
+function getMovieInList(id, listName) {
+    var movies = getMovieList(listName);
+    for (var i = movies.length - 1; i >= 0; i--) {
+        if (movies[i].id == id) {
+            return movies[i];
+        }
+    };
 }
 
 function makeUL(array) {

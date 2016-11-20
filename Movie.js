@@ -11,11 +11,9 @@ function Movie(id, container, data) {
     function createNewMovie(data) {
         self.data = data;
         self.element = $('<div>').addClass('movie');
-        if(data.poster_path){
+        if (data.poster_path) {
             self.image = $('<img>').appendTo(self.element).attr('src', "http://image.tmdb.org/t/p/w1000" + data.poster_path).addClass('movie-thumbnail').attr('title', data.id); //.attr('title', data.name);
-        }
-        else
-        {
+        } else {
             self.image = $('<div>').appendTo(self.element).addClass('movie-thumbnail').addClass('no-poster');
             self.title = $('<h4>').appendTo(self.image).text(data.name).addClass('movie-title');
         }
@@ -43,20 +41,18 @@ function Movie(id, container, data) {
 
             if (i <= starNb) {
                 starImg.attr('src', "star-md.png");
-            }
-            else {
+            } else {
                 starImg.attr('src', "star-empty-md.png");
             }
         }
 
         // EVENTS
 
-        $(self.image).on('click', function (e) {
+        $(self.image).on('click', function(e) {
             if (!self.popup.is(':visible')) {
                 $('.movie-popup').hide(300);
                 self.popup.show(500);
-            }
-            else {
+            } else {
                 $('.movie-popup').hide(300);
             }
         });
@@ -66,13 +62,14 @@ function Movie(id, container, data) {
             starsContainer.children('.star').each(function(i, star) {
                 if ($(star).data('value') <= starValue) {
                     $(star).attr('src', "star-md.png");
-                }
-                else {
+                } else {
                     $(star).attr('src', "star-empty-md.png");
                 }
             });
         });
-        $(starsContainer.children('.star')).on('mouseleave', {context: self}, function(e) {
+        $(starsContainer.children('.star')).on('mouseleave', {
+            context: self
+        }, function(e) {
             var starNb = 0;
             if (e.data.context.rating > -2) {
                 starNb = e.data.context.rating * 2 + 3;
@@ -80,8 +77,7 @@ function Movie(id, container, data) {
             starsContainer.children('.star').each(function(i, star) {
                 if (i + 1 <= starNb) {
                     $(star).attr('src', "star-md.png");
-                }
-                else {
+                } else {
                     $(star).attr('src', "star-empty-md.png");
                 }
             });
@@ -89,23 +85,24 @@ function Movie(id, container, data) {
         $(starsContainer.children('.star')).on('click', function(e) {
             var rating = ($(this).data('value') - 3) / 2.0; // Rating is between -1 and 1
             // addLikedMovie(data.id, rating);
-            rateMovie(data.id,rating);
+            rateMovie(data.id, rating);
         });
 
-        $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
+        var watchlistButton = $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
+        $(watchlistButton).on('click', {
+            context: self
+        }, function(e) {
+            addToWatch(e.data.context.id);
+        });
 
         self.container.append(self.element);
 
     }
 
-    if(data)
-    {
+    if (data) {
         self.data = data;
         createNewMovie(data);
-    }
-    else
-    {
+    } else {
         getMovieInfo(id, createNewMovie);
     }
 }
-

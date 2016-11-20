@@ -149,12 +149,38 @@
             });
         }
 
+        function updateToWatchList()
+        {
+            $('#watchList').empty();
+            var watchMovies = getToWatchMovies();
+            for (var i = 0; i <watchMovies.length; i++) {
+                new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
+            };
+        }
+
+        function addToWatch(id)
+        {
+            addToWatchMovie(id, updateLikedList);
+        }
+
         function rateMovie(id,rating) {
             addLikedMovie(id,rating, updateLikedList);
         }
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
+        }
+
+        function removeMovie(id)
+        {
+            if(movieIsLiked(id)!=-1)
+            {
+                removeLikedMovie(id,updateLikedList);
+            }
+            else if(movieisToWatch(id)!=-1)
+            {
+                removeToWatchMovie(id,updateLikedList);
+            }
         }
 
         function removeMovie() {
@@ -167,11 +193,14 @@
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
+
+            updateSearch();
+            updateToWatchList();
+
             if(obj_KNN)
             {
                updateAndShowRecommendations(true);
             }
-            updateSearch();
 
         }
 
