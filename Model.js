@@ -1,6 +1,6 @@
 var likedMoviesListName = 'LikedMovies';
 var toWatchMoviesListName = 'ToWatchMovies';
-var emptyFunc = function () {};
+var emptyFunc = function() {};
 
 function getMovieInfo(id, callback) {
     $.getJSON("https://api.themoviedb.org/3/tv/" + id + "?api_key=6bca0b74270a3299673d934c1bb11b4d&language=en-US", callback);
@@ -33,14 +33,14 @@ function addMovieToList(id, rating, listName, callback) {
         var index = indexOfID(movieList, id);
 
         if (index == -1) {
-            getMovieInfo(id, function (data) {
+            getMovieInfo(id, function(data) {
                 if (!data.status_code) {
                     movieList.push({
                         id: data.id,
                         name: data.name,
                         overview: data.overview,
                         poster_path: data.poster_path,
-                        genre_ids: data.genres.map(function (genre) {
+                        genre_ids: data.genres.map(function(genre) {
                             return genre.id;
                         }),
                         first_air_date: data.first_air_date,

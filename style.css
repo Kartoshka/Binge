@@ -18,14 +18,6 @@ header {
     padding-bottom: 20px;
 }
 
-header h1 {
-    margin: 0;
-    position: fixed;
-    top: 20px;
-    left: 35px;
-    font-family: 'Oswald';
-    text-decoration: underline;
-}
 
 header h5 {
     font-weight: 400;
@@ -35,6 +27,29 @@ header h5 {
     color: #888;
     transition: font-size 0.5s ease;
     font-size: 14px;
+}
+
+.logo
+{
+    position: fixed;
+    top: 20px;
+    left: 35px;
+    width: 160px;
+}
+
+.header-icon {
+    position: fixed;
+    top: 35px;
+    right: 35px;
+    width: 17px;
+    border-radius: 50%;
+    transition: box-shadow 0.4s ease;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.header-icon:hover {
+    box-shadow: 1px 1px 5px #AAA;
 }
 
 header h5.selected {
@@ -98,11 +113,6 @@ header h5:hover {
     max-width: 394px;
 }
 
-.movie-overview {
-    text-align: justify;
-    padding: 0 10px;
-}
-
 #search {
     display: flex;
     flex-direction: column;
@@ -124,17 +134,33 @@ header h5:hover {
     justify-content: center;
     align-items: center;
     border: solid 1px #AAA;
+    background-image: url(NoPoster.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
+    background-color: rgba(196, 196, 196, 0.14);
+
 }
 
 .no-poster .movie-title {
     cursor: default;
+    font-size: 30px;
+    font-weight: bold;
+    align-self: flex-start;
+    color: #757575;
 }
+
 
 .movie-popup {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 400px;
+}
+
+.movie-overview {
+    text-align: justify;
+    padding: 0 17px;
 }
 
 .stars-container {
@@ -165,3 +191,4 @@ header h5:hover {
     /* Remove blue border when clicked in Chrome */
     outline: 0;
 }
+

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CodeJam2016</title>
+    <title>Binge</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -14,11 +14,12 @@
 
 <body>
     <header>
-        <h1>Smooth</h1>
+        <img src='Binge.png' class='logo'>
         <h5 id="recommendedHeader" class="headerTitle">Recommended</h5>
         <h5 id="likedHeader" class="headerTitle">Rated</h5>
         <h5 id="watchHeader" class="headerTitle">WatchList</h5>
         <h5 id="searchHeader" class="headerTitle">Search</h5>
+        <img src="question-sign-sm.png" title="Help" class="header-icon">
     </header>
     <div id="categories">
         <div id="recommended" class="category">
@@ -88,16 +89,13 @@
 
         // Mousewheel stuff
         $(".scroll-container").mousewheel(function (event, delta) {
-
             this.scrollLeft -= (delta * 30);
-
             event.preventDefault();
-
         });
 
         // Select first header
         $('.category').hide();
-        $('#recommended').show();
+        $('#recommended').fadeIn(1000);
         $('#recommendedHeader').addClass('selected');
         // Setup event
         $('.headerTitle').on('click', function (e) {
@@ -110,16 +108,16 @@
 
             switch ($(this).attr('id')) {
             case "recommendedHeader":
-                $('#recommended').show();
+                $('#recommended').fadeIn(1000);
                 break;
             case "likedHeader":
-                $('#liked').show();
+                $('#liked').fadeIn(1000);
                 break;
             case "watchHeader":
-                $('#watch').show();
+                $('#watch').fadeIn(1000);
                 break;
             case "searchHeader":
-                $('#search').show();
+                $('#search').fadeIn(1000);
                 break;
             }
         });
@@ -148,17 +146,43 @@
             });
         }
 
-        function rateMovie(id, rating) {
-            addLikedMovie(id, rating, updateLikedList);
+        function updateToWatchList()
+        {
+            $('#watchList').empty();
+            var watchMovies = getToWatchMovies();
+            for (var i = 0; i <watchMovies.length; i++) {
+                new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
+            };
+        }
+
+        function addToWatch(id)
+        {
+            addToWatchMovie(id, updateLikedList);
+        }
+
+        function rateMovie(id,rating) {
+            addLikedMovie(id,rating, updateLikedList);
         }
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
         }
 
-        function removeMovie() {
-            removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
+        function removeMovie(id)
+        {
+            if(movieIsLiked(id)!=-1)
+            {
+                removeLikedMovie(id,updateLikedList);
+            }
+            else if(movieIsToWatch(id)!=-1)
+            {
+                removeToWatchMovie(id,updateLikedList);
+            }
         }
+
+//        function removeMovie() {
+//            removeLikedMovie(parseInt($('#movieID').val()), updateLikedList);
+//        }
 
         function updateLikedList() {
             $('#likedList').empty();
@@ -166,10 +190,13 @@
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
-            if (obj_KNN) {
-                updateAndShowRecommendations(true);
-            }
             updateSearch();
+            updateToWatchList();
+
+            if(obj_KNN)
+            {
+               updateAndShowRecommendations(true);
+            }
 
         }
 

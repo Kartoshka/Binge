@@ -3,7 +3,17 @@ function saveLikedMovies(likedMovies, callback) {
 }
 
 function addLikedMovie(id, rating,callback) {
-    addMovieToList(id, rating, likedMoviesListName, callback);
+    console.log("rate");
+
+    if(movieIsToWatch(id)!=-1)
+    {
+        console.log("is in watch");
+        removeToWatchMovie(id,addMovieToList(id, rating, likedMoviesListName, callback));
+    }
+    else
+    {
+        addMovieToList(id, rating, likedMoviesListName, callback);
+    }
 }
 
 function removeLikedMovie(id, callback) {
