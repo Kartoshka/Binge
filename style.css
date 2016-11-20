@@ -113,6 +113,7 @@ header h5:hover {
     display: flex;
     flex-direction: row;
     margin: 0 7px;
+    flex-shrink: 0;
 }
 
 .movie-thumbnail {
