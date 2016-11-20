@@ -62,6 +62,7 @@
     </div>
     <div style="flex-direction: row;">
         <input type="text" id="movieID">
+        <input type="text" id="rating">
         <button onClick="addMovie()">Test</button>
         <button onClick="clearMovies()">ClearMovies</button>
         <button onClick="removeMovie()">Remove</button>
@@ -73,7 +74,7 @@
     <script src="jquery.mousewheel.min.js"></script>
     <script src="Model.js"></script>
     <script src="ToWatchMovies.js"></script>
-    <script type="LikedMovies.js"></script>
+    <script src="LikedMovies.js"></script>
     <script src="Movie.js"></script>
     <script src="KNN.js"></script>
 
@@ -141,13 +142,13 @@
 
 
         function addMovie() {
-            addLikedMovie(parseInt($('#movieID').val()), 1, addNewLikedMovie);
+            addLikedMovie(parseInt($('#movieID').val()),parseFloat($('#rating').val()), updateLikedList);
         }
 
-        function addNewLikedMovie(id) {
-            new Movie(id, $('#likedList'));
-            updateAndShowRecommendations(true);
-        }
+        // function addNewLikedMovie(id) {
+        //     new Movie(id, $('#likedList'));
+        //     updateAndShowRecommendations(true);
+        // }
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
@@ -162,10 +163,11 @@
 
         function updateLikedList() {
             $('#likedList').empty();
-            var movies = getLikedMovies();
+            var movies = getLikedMoviesByScore();
             for (var i = movies.length - 1; i >= 0; i--) {
                 new Movie(movies[i].id, $('#likedList'), movies[i]);
             }
+
         }
 
         updateLikedList();
