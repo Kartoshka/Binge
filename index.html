@@ -24,10 +24,9 @@
         <h5 id="watchHeader" class="headerTitle">WatchList</h5>
         <h5 id="searchHeader" class="headerTitle">Search</h5>
 
-        <div >
-            <div id="help-text">Search for shows and rate them to get better recommendations
-                or add them to your watch later list to rate them afterwards!</div>
-            <img id="help-icon" class="header-icon" src="question-sign-sm.png" title="Help" >
+        <div>
+            <div id="help-text">Search for shows and rate them to get better recommendations or add them to your watch later list to rate them afterwards!</div>
+            <img id="help-icon" class="header-icon" src="question-sign-sm.png" title="Help">
         </div>
 
     </header>
@@ -133,11 +132,11 @@
 
 
         //Help text on hover show
-        $( "#help-icon" ).mouseover(function() {
-            $( "#help-text" ).show(200);
+        $("#help-icon").mouseover(function () {
+            $("#help-text").show(200);
         });
-        $( "#help-icon" ).mouseout(function() {
-            $( "#help-text" ).hide(200);
+        $("#help-icon").mouseout(function () {
+            $("#help-text").hide(200);
         });
 
 
@@ -145,110 +144,91 @@
         $('#searchField').keyup(updateSearch);
 
 
-        function updateSearch()
-        {
+        function updateSearch() {
             $('#searchList').empty();
 
-            var search =$('#searchField').val().trim();
+            var search = $('#searchField').val().trim();
             if (search == "") {
                 $('#searchList').empty();
                 $('<div>').appendTo('#searchList').addClass('to-do-hint').text('Search for your favorite movies to rate them or add them to your watch list!');
-            }
-            else if(search.toUpperCase() == "PORN" || search.toUpperCase() == "SEX" || search == "69")
-            {
+            } else if (search.toUpperCase() == "PORN" || search.toUpperCase() == "SEX" || search == "69") {
                 $('<div>').appendTo('#searchList').addClass('to-do-hint').text('ಠ_ಠ');
 
-            }
-            else if (search == "dev-tools") {
+            } else if (search == "dev-tools") {
                 $("#dev-tools").show();
-            }
-            else
-            {
+            } else {
                 getMovies(search, function (data) {
-                for (var i = 0; i < data.results.length; i++) {
-                    if (movieIsLiked(data.results[i].id) == -1) {
-                        new Movie(data.results[i].id, $('#searchList'), data.results[i]);
-                    } else {
-                        var cachedMovie = getLikedMovie(data.results[i].id);
-                        if (cachedMovie) {
-                            new Movie(cachedMovie.id, $('#searchList'), cachedMovie);
+                    for (var i = 0; i < data.results.length; i++) {
+                        if (movieIsLiked(data.results[i].id) == -1) {
+                            new Movie(data.results[i].id, $('#searchList'), data.results[i]);
+                        } else {
+                            var cachedMovie = getLikedMovie(data.results[i].id);
+                            if (cachedMovie) {
+                                new Movie(cachedMovie.id, $('#searchList'), cachedMovie);
+                            }
                         }
                     }
-                }
-            });
+                });
             }
 
         }
 
-        function updateToWatchList()
-        {
+        function updateToWatchList() {
             $('#watchList').empty();
             var watchMovies = getToWatchMovies();
 
-            if(watchMovies.length==0)
-            {
+            if (watchMovies.length == 0) {
                 $('<div>').appendTo('#watchList').addClass('to-do-hint').text('Add movies to watch later and to filter your recommendations list!');
-            }
-            else
-            {
-                for (var i = 0; i <watchMovies.length; i++) {
+            } else {
+                for (var i = 0; i < watchMovies.length; i++) {
                     new Movie(watchMovies[i].id, $('#watchList'), watchMovies[i]);
                 };
             }
 
         }
 
-        function addToWatch(id)
-        {
+        function addToWatch(id) {
             addToWatchMovie(id, updateLikedList);
         }
 
-        function rateMovie(id,rating) {
-            addLikedMovie(id,rating, updateLikedList);
+        function rateMovie(id, rating) {
+            addLikedMovie(id, rating, updateLikedList);
         }
 
         function clearMovies() {
             clearLikedMovies(updateLikedList);
         }
 
-        function removeMovie(id)
-        {
-            if(movieIsLiked(id)!=-1)
-            {
-                removeLikedMovie(id,updateLikedList);
-            }
-            else if(movieIsToWatch(id)!=-1)
-            {
-                removeToWatchMovie(id,updateLikedList);
+        function removeMovie(id) {
+            if (movieIsLiked(id) != -1) {
+                removeLikedMovie(id, updateLikedList);
+            } else if (movieIsToWatch(id) != -1) {
+                removeToWatchMovie(id, updateLikedList);
             }
         }
 
         function updateLikedList() {
             $('#likedList').empty();
             var movies = getLikedMoviesByScore();
-            if(movies.length==0)
-            {
+            if (movies.length == 0) {
                 $('<div>').appendTo('#likedList').addClass('to-do-hint').text('Rate some movies to start getting tailored recommendations!');
-            }
-            else
-            {
-               for (var i = movies.length - 1; i >= 0; i--) {
-                new Movie(movies[i].id, $('#likedList'), movies[i]);
+            } else {
+                for (var i = movies.length - 1; i >= 0; i--) {
+                    new Movie(movies[i].id, $('#likedList'), movies[i]);
                 }
             }
             updateSearch();
             updateToWatchList();
 
-            if(obj_KNN)
-            {
-               updateAndShowRecommendations(true);
+            if (obj_KNN) {
+                updateAndShowRecommendations(true);
             }
 
         }
 
         updateLikedList();
 
-        var obj_KNN = new KNN(20, 20, 0.5);
+        var obj_KNN = new KNN(20, 20, 0.6);
 
         function updateAndShowRecommendations(reset) {
             if (reset) {

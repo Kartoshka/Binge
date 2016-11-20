@@ -87,6 +87,8 @@ function KNN(numRecommendations, numPages, fraction) {
         }
         distance = 0;
         for (var j = 0; j < k; j++) {
+            if (ratings[j] === 0)
+                ratings[j] = 0.5;
             distance += 1 / distances[j] * ratings[j];
         }
         return distance / k;
@@ -99,7 +101,14 @@ function KNN(numRecommendations, numPages, fraction) {
 
         var likedMovies = getLikedMovies();
         if (likedMovies.length == 0) {
-            this.recommendations = this.pool.slice(0, this.n);
+            this.recommendations = [];
+            var i = 0;
+            while (this.pool[i] && this.recommendations.length < this.n) {
+                if (!(movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1))
+                    this.recommendations.push(this.pool[i]);
+                i++;
+
+            }
 
         } else {
 
