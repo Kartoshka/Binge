@@ -82,7 +82,7 @@ header h5:hover {
 .movie {
     display: flex;
     flex-direction: row;
-    margin: 0 5px;
+    margin: 0 7px;
 }
 
 .movie-thumbnail {
@@ -96,6 +96,11 @@ header h5:hover {
 .movie-thumbnail:hover {
     height: 450px;
     max-width: 394px;
+}
+
+.movie-overview {
+    text-align: justify;
+    padding: 0 10px;
 }
 
 #search {

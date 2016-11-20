@@ -22,7 +22,16 @@ function Movie(id, container, data) {
 
         self.popup = $('<div>').appendTo(self.element).addClass('movie-popup').hide();
         $('<h4>').appendTo(self.popup).text(data.name).addClass('movie-title');
-        $('<p>').appendTo(self.popup).text(data.overview).addClass('movie-overview');
+
+        // Cut the description if it is too long
+        var overviewText = data.overview;
+        if (overviewText.length > 450) {
+            overviewText = overviewText.substr(0, 450);
+            overviewText += '...';
+        }
+
+        $('<p>').appendTo(self.popup).text(overviewText).addClass('movie-overview');
+
         starsContainer = $('<div>').appendTo(self.popup).addClass('stars-container');
 
         var starNb = 0;
@@ -81,7 +90,7 @@ function Movie(id, container, data) {
             var rating = ($(this).data('value') - 3) / 2.0; // Rating is between -1 and 1
             // addLikedMovie(data.id, rating);
             rateMovie(data.id,rating);
-        })
+        });
 
         $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
 
