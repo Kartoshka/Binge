@@ -41,7 +41,7 @@ function KNN(numRecommendations, numPages, fraction) {
             }
         }
         tempDist = (Math.max(movie1.genre_ids.length, movie2.genre_ids.length) - commonGenres);
-        distance += tempDist * 50;
+        distance += tempDist * tempDist * 20;
 
         // origin country
         if (movie1.origin_country !== movie2.origin_country)
@@ -55,26 +55,27 @@ function KNN(numRecommendations, numPages, fraction) {
         tempDist = Math.abs(parseFloat(movie1.first_air_date) - parseFloat(movie2.first_air_date));
         if (isNaN(parseFloat(movie1.first_air_date)) || isNaN(parseFloat(movie2.first_air_date)))
             tempDist = 10;
-        distance += tempDist;
+        distance += tempDist * tempDist;
 
         // popularity
         tempDist = Math.abs(parseFloat(movie1.popularity) - parseFloat(movie2.popularity));
-        distance += tempDist;
+        distance += tempDist * tempDist;
 
         // vote average
         tempDist = Math.abs(parseFloat(movie1.vote_average) - parseFloat(movie2.vote_average));
-        distance += tempDist;
+        distance += tempDist * tempDist;
 
         return Math.sqrt(distance);
     }
 
 
 
-    function getKNNAvgDist(movie, likedMovies, k) {
+    function getKNNRating(movie, likedMovies, k) {
 
         k = Math.min(likedMovies.length, k);
         var distance = 0
         var distances = [];
+        var ratings = []
         for (var i = 0; i < likedMovies.length; i++) {
             distance = getDistance(likedMovies[i], movie);
             var j = 0;
@@ -82,10 +83,11 @@ function KNN(numRecommendations, numPages, fraction) {
                 j++;
             }
             distances.splice(j, 0, distance);
+            ratings.splice(j, 0, likedMovies[i].app_user_rating);
         }
         distance = 0;
         for (var j = 0; j < k; j++) {
-            distance += distances[j];
+            distance += 1 / distances[j] * ratings[j];
         }
         return distance / k;
     }
@@ -103,11 +105,11 @@ function KNN(numRecommendations, numPages, fraction) {
 
             for (var i = 0; i < this.pool.length; i++) {
 
-                var rating = getKNNAvgDist(this.pool[i], likedMovies, Math.ceil(this.fraction * likedMovies.length));
+                var rating = getKNNRating(this.pool[i], likedMovies, Math.ceil(this.fraction * likedMovies.length));
                 if (movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1)
-                    rating = Infinity;
+                    rating = -Infinity;
                 var j = 0;
-                while (j < Math.min(this.ratings.length, this.n) && this.ratings[j] < rating) {
+                while (j < Math.min(this.ratings.length, this.n) && this.ratings[j] > rating) {
                     j++;
                 }
                 this.recommendations.splice(j, 0, this.pool[i]);
