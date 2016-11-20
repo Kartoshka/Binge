@@ -55,6 +55,7 @@ function addMovieToList(id, rating, listName, callback) {
                         app_user_rating: rating
                     });
                     saveMovieList(movieList, listName);
+                    console.log("Saved list");
                     if (callback)
                         callback(id);
                 }
