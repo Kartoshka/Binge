@@ -121,6 +121,10 @@ header h5:hover {
     border: solid 1px #AAA;
 }
 
+.no-poster .movie-title {
+    cursor: default;
+}
+
 .movie-popup {
     display: flex;
     flex-direction: column;
