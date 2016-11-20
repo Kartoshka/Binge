@@ -19,7 +19,7 @@ Reminder: Do you forget easily? Binge remembers your watchlist even if you do no
 Personalized: Are you tired of Netflix telling you to watch the same thing over and over again? Binge uses its own machine learning suggestion algorithm.
 
 ## Getting started
-Access Binge [here](https://kartoshka.github.io/Binge/), or open `index.html` in Chrome, FireFox or Safari.
+Access Binge [here](https://kartoshka.github.io/Binge/), or open `index.html` in Chrome, Firefox or Safari and even on mobile devices!
 
 Use the **Search** tab to find shows you've watched, then click the stars to rate them.
 
