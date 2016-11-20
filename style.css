@@ -124,11 +124,22 @@ header h5:hover {
     justify-content: center;
     align-items: center;
     border: solid 1px #AAA;
+    background-image: url(NoPoster.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
+    background-color: rgba(196, 196, 196, 0.14);
+
 }
 
 .no-poster .movie-title {
     cursor: default;
+    font-size: 30px;
+    font-weight: bold;
+    align-self: flex-start;
+    color: #757575;
 }
+
 
 .movie-popup {
     display: flex;
@@ -165,3 +176,4 @@ header h5:hover {
     /* Remove blue border when clicked in Chrome */
     outline: 0;
 }
+

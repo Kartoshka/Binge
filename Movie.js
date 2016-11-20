@@ -15,6 +15,7 @@ function Movie(id, container, data) {
             self.image = $('<img>').appendTo(self.element).attr('src', "http://image.tmdb.org/t/p/w1000" + data.poster_path).addClass('movie-thumbnail').attr('title', data.id); //.attr('title', data.name);
         } else {
             self.image = $('<div>').appendTo(self.element).addClass('movie-thumbnail').addClass('no-poster');
+           // $('<img>').appendTo(self.image).attr('src', "NoPoster.png").addClass('no-poster-thumbnail');
             self.title = $('<h4>').appendTo(self.image).text(data.name).addClass('movie-title');
         }
 
