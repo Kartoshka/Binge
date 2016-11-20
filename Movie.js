@@ -89,11 +89,31 @@ function Movie(id, container, data) {
         });
 
         var watchlistButton = $('<button>').appendTo(starsContainer).text("+ WatchList").attr('title', 'Add to WatchList').addClass('add-to-watchlist');
-        $(watchlistButton).on('click', {
-            context: self
-        }, function(e) {
-            addToWatch(e.data.context.id);
-        });
+
+        if (self.rating > -2) {
+            watchlistButton.text('- Rated');
+            $(watchlistButton).on('click', {
+                context: self
+            }, function(e) {
+                removeMovie(e.data.context.id);
+            });
+        }
+        else if (movieIsToWatch(self.id) != -1) {
+            watchlistButton.text('- WatchList');
+            $(watchlistButton).on('click', {
+                context: self
+            }, function(e) {
+                removeMovie(e.data.context.id);
+            });
+
+        }
+        else {
+            $(watchlistButton).on('click', {
+                context: self
+            }, function(e) {
+                addToWatch(e.data.context.id);
+            });
+        }
 
         self.container.append(self.element);
 
