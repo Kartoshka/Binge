@@ -1,4 +1,4 @@
-# Binge
+![Binge](Binge.png?raw=true)
 
 ## What is it?
 It's a bird, it's a plane, it's Binge!
@@ -26,4 +26,8 @@ If a recommended movie interests you, click "+ WatchList" to add it to the **Wat
 Binge will remember your ratings and watchlist for your next Netflix (and chill?) session.
 
 ## How it works
-Binge uses themoviedb.org api to get tv show data. It extracts show genres, release dates, country of origin, original languages and popularity, then runs a slightly modified KNN algorithm to give you personalized suggestions.
+Binge uses [themoviedb](https://www.themoviedb.org/) api to get tv show data. It extracts show genres, release dates, country of origin, original languages and popularity, then runs a slightly modified KNN algorithm to give you personalized suggestions.
+
+The Binge logo was made using [Emblemmatic](https://emblemmatic.org/markmaker/#/).
+
+The icons used are from [Iconic](https://useiconic.com/).
