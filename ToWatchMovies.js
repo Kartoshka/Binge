@@ -15,7 +15,7 @@ function clearToWatchMovies(callback) {
 }
 
 function movieIsToWatch(id) {
-    return movieInList(toWatchMoviesListName);
+    return movieInList(id);
 }
 
 function saveToWatchMovies(likedMovies) {
