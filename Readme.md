@@ -9,6 +9,8 @@ Try it at https://kartoshka.github.io/Binge/ or see the `Getting started` sectio
 
 Created by team Marmalade: Jérôme Parent-Lévesque ([@jeromepl](https://github.com/jeromepl)), Mathieu Bolduc ([@mathieubolduc](https://github.com/mathieubolduc)) and Elie Harfouche ([@Kartoshka](https://github.com/Kartoshka)).
 
+You can read more about our design process [here](https://github.com/anthony-ubah/Senior_Team4/blob/master/design-process.md).
+
 ![Screenshot](Capture.PNG?raw=true)
 
 ## Why Binge?
