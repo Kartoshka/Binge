@@ -15,3 +15,8 @@ Note that a TV show cannot appear in more than one of the following sections: Ra
 We finally settled for a KNN algorithm, after much consideration. We judged that, given the very limited number of features we had access to (genres, release dates, country of origin, original languages and popularity) other algorithms such as Neural Networks would most likely not work well. Neural Networks work best when working with a bigger input size and, most importantly, a bigger training data size. KNN, in this sense, was perfect as it does not require training (it can thus evolve while ratings added live). We were able to use the "star" ratings made by the user by modifying the algorithm to make use of these floating point values, thus allowing negatively rating some shows.
 
 ## Timeline
+We use most of the time on Friday evening for brainstorming, design sketches and algorithm research. By the end of the day we had a clear idea of what to do for the next day and what we wanted to achieve by the end of the event. We had a little bit of time to create a structure for the code and add some elements.
+
+On Saturday evening, we achieved a Minimum Viable Product. We had a working version of our idea and proceeded to create a list of things left to do, as well as a list of things we would like to add, if time permitted.
+
+On Sunday, we finished going through our list at around 1pm, at which point we started polishing the application a lot. We managed to go through the entire list of "non-essential" features we wanted to add and worked a lot on user experience (UX/UI). We added a lot of animations and made the entire application more mobile-friendly.
