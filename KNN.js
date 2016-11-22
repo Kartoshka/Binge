@@ -88,7 +88,7 @@ function KNN(numRecommendations, numPages, fraction) {
         distance = 0;
         for (var j = 0; j < k; j++) {
             if (ratings[j] === 0)
-                ratings[j] = 0.5;
+                ratings[j] = 0.2;
             distance += 1 / distances[j] * ratings[j];
         }
         return distance / k;
