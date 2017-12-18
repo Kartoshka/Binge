@@ -113,6 +113,7 @@ function KNN(numRecommendations, numPages, fraction) {
         } else {
 
             for (var i = 0; i < this.pool.length; i++) {
+                if (!this.pool[i]) continue;
 
                 var rating;
                 if (movieIsToWatch(this.pool[i].id) !== -1 || movieIsLiked(this.pool[i].id) !== -1) {
